@@ -1,13 +1,16 @@
 package com.example.oop;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.bson.Document;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+
+
 
 public class LoginRegApp extends Application {
     @Override
@@ -21,6 +24,7 @@ public class LoginRegApp extends Application {
         catch(Exception e){
             e.printStackTrace();
         }
+
     }
 
     public static void main(String[] args) {
