@@ -38,9 +38,11 @@ public class SceneController {
         stage.show();
     }
     public void registerAccount(ActionEvent event) throws IOException{
+        long count = MongoClientConnection.col.countDocuments();
+        int nextId = (int) (count + 1);
         String email = emailField.getText();
         String password = passField.getText();
-        Document newAcc = new Document("_id", "1").append("email", email);
+        Document newAcc = new Document("_id", nextId).append("email", email);
         newAcc.append("password", password);
         writeData(newAcc);
     }
