@@ -89,15 +89,9 @@ public class SceneController {
     }
     public void login(ActionEvent event) throws IOException{
         try{
-            Document query = new Document("_id", loginemail.getText());
-            Document userDocument = (Document) accountcol.find(query).first();
-            if (userDocument != null) {
-                //Console text to check found data on db
-                /*for (String key : userDocument.keySet()) {
-                    System.out.println(key + ": " + userDocument.get(key));
-                }
-                 */
-                if(Objects.equals(userDocument.getString("password"), encodeSHA256(loginpass.getText())))
+            Document userData = loadUserData(loginemail.getText());
+            if (userData != null) {
+                if(Objects.equals(userData.getString("password"), encodeSHA256(loginpass.getText())))
                  errorchecklog.setText("Login successful!");
                 else
                     throw new InvalidPasswordException();

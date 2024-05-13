@@ -29,6 +29,16 @@ public class MongoClientConnection {
             accountcol.insertOne(newUser);
             error.setText("Account successfully created! You can login in now.");
     }
+    public static Document loadUserData(String email){
+        Document query = new Document("_id", email);
+        Document userDocument = (Document) accountcol.find(query).first();
+        //Console text to check found data on db
+                /*for (String key : userDocument.keySet()) {
+                    System.out.println(key + ": " + userDocument.get(key));
+                }
+                 */
+        return userDocument;
+    }
     public static String encodeSHA256(String message) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
