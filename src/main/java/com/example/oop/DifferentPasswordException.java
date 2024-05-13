@@ -5,3 +5,4 @@ public class DifferentPasswordException extends Exception{
         super("Both passwords aren't the same, check again");
     }
 }
+
