@@ -78,13 +78,13 @@ public class SceneController {
             System.out.println(newUser.getUserId() + newUser.getDoB() + newUser.getEmail() + newUser.getPassword());
         }
         catch(InvalidEmailException | DifferentPasswordException e){
-            errorchecklog.setText(e.getMessage());
+            errorcheck.setText(e.getMessage());
         }
         catch(MongoWriteException e){
-            errorchecklog.setText("Email already exists, try logging in instead.");
+            errorcheck.setText("Email already exists, try logging in instead.");
         }
         catch(Exception e){
-            errorchecklog.setText("Invalid credentials, try again.");
+            errorcheck.setText("Invalid credentials, try again.");
         }
     }
     public void login(ActionEvent event) throws IOException{
