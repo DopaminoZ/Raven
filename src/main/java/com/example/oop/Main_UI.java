@@ -5,14 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.bson.Document;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 
 
 
-public class LoginRegApp extends Application {
+public class Main_UI extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
