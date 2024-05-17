@@ -6,6 +6,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import javafx.scene.control.Label;
 import org.bson.Document;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +14,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.regex.Pattern;
+
+import static java.lang.Thread.sleep;
 
 
 public class MongoClientConnection {
@@ -25,9 +28,14 @@ public class MongoClientConnection {
     public static void addUserData(User x, Label error){
 
             Document newUser = new Document("_id", x.getEmail()).append("userId", x.getUserId()).append("password", encodeSHA256(x.getPassword())).
-                    append("fullname", x.getFirstName() + " " + x.getLastName()).append("dob", x.getDoB());
+                    append("fullname", x.getFirstName() + " " + x.getLastName()).append("dob", x.getDoB()).append("secques", x.getSecurityQuestion()).append("quesans", encodeSHA256(x.getQuestionAnswer()));
             accountcol.insertOne(newUser);
             error.setText("Account successfully created! You can login in now.");
+    }
+    public static void updateUserData(Document user){
+
+        accountcol.replaceOne(Filters.eq("_id", user.getString("_id")), user);
+
     }
     public static Document loadUserData(String email){
         Document query = new Document("_id", email);

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -34,7 +35,7 @@ public class SceneController {
     @FXML
     private TextField lastnamefield;
     @FXML
-    private TextField confirmfield;
+    private TextField confirmpassField;
     @FXML
     private TextField loginemail;
     @FXML
@@ -44,9 +45,29 @@ public class SceneController {
     @FXML
     private Label errorchecklog;
     @FXML
-    private Label errorcheck;
-
-
+    private Label errorcheckLabel;
+    @FXML
+    private TextField questionField;
+    @FXML
+    private TextField answerField;
+    @FXML
+    private Label securityQuestionLabel;
+    @FXML
+    private Label newpassLabel;
+    @FXML
+    private Label newconfirmLabel;
+    @FXML
+    private Label forgetLabel;
+    @FXML
+    private TextField newpassField;
+    @FXML
+    private TextField newpassconfirmField;
+    @FXML
+    private TextField forgetAnswerField;
+    @FXML
+    private TextField forgetEmailField;
+    @FXML
+    private Button forgetpassButton;
     private static final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
     public void switchtoReg(ActionEvent event) throws IOException {
@@ -56,8 +77,15 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
-    public void switchtoLog(ActionEvent event) throws IOException{
+    public void switchtoLogin(ActionEvent event) throws IOException{
         root = FXMLLoader.load(getClass().getResource("login_page.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchtoForgetPass(ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("forgetpass_page.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -69,22 +97,23 @@ public class SceneController {
             int nextId = (int) (count + 1);
             LocalDate x = dobfield.getValue();
             Date dob = Date.valueOf(x);
-            if(!Objects.equals(passField.getText(), confirmfield.getText()))
+            if(!Objects.equals(passField.getText(), confirmpassField.getText()))
                 throw new DifferentPasswordException();
             if(!isValidEmail(emailField.getText()))
                 throw new InvalidEmailException();
-            User newUser = new User(String.valueOf(nextId), firstnamefield.getText(), lastnamefield.getText(), emailField.getText(), passField.getText(), dob);
-            addUserData(newUser, errorcheck);
-            System.out.println(newUser.getUserId() + newUser.getDoB() + newUser.getEmail() + newUser.getPassword());
+            User newUser = new User(String.valueOf(nextId), firstnamefield.getText(), lastnamefield.getText(), emailField.getText(), passField.getText(), dob, questionField.getText(), answerField.getText());
+            addUserData(newUser, errorcheckLabel);
+            switchtoLogin(event);
+            //System.out.println(newUser.getUserId() + newUser.getDoB() + newUser.getEmail() + newUser.getPassword());
         }
         catch(InvalidEmailException | DifferentPasswordException e){
-            errorcheck.setText(e.getMessage());
+            errorcheckLabel.setText(e.getMessage());
         }
         catch(MongoWriteException e){
-            errorcheck.setText("Email already exists, try logging in instead.");
+            errorcheckLabel.setText("Email already exists, try logging in instead.");
         }
         catch(Exception e){
-            errorcheck.setText("Invalid credentials, try again.");
+            errorcheckLabel.setText("Invalid credentials, try again.");
         }
     }
     public void login(ActionEvent event) throws IOException{
@@ -104,6 +133,47 @@ public class SceneController {
         }
         catch (Exception e){
             errorchecklog.setText("No account exists with that email.");
+        }
+    }
+    public void forgetPassword(ActionEvent event) throws IOException{
+        try{
+            Document userData = loadUserData(forgetEmailField.getText());
+            if (userData != null) {
+                    securityQuestionLabel.setText(userData.getString("secques"));
+                    forgetpassButton.setDisable(false);
+                    forgetAnswerField.setDisable(false);
+                    newconfirmLabel.setDisable(false);
+                    newpassLabel.setDisable(false);
+                    newpassField.setDisable(false);
+                    newpassconfirmField.setDisable(false);
+                    forgetLabel.setText("");
+            } else {
+                throw new Exception();
+            }
+        }
+        catch (Exception e){
+            forgetLabel.setText("No account exists with that email.");
+        }
+    }
+    public void answerSecQues(ActionEvent event) throws IOException{
+        try{
+            Document userData = loadUserData(forgetEmailField.getText());
+            if(!Objects.equals(encodeSHA256(forgetAnswerField.getText()), userData.getString("quesans")))
+                throw new Exception();
+            else if(!Objects.equals(newpassconfirmField.getText(), newpassField.getText()))
+                throw new DifferentPasswordException();
+            else {
+                forgetpassButton.setDisable(true);
+                userData.put("password", encodeSHA256(newpassField.getText()));
+                updateUserData(userData);
+                forgetLabel.setText("Password has been reset, you can login now.");
+            }
+        }
+        catch (DifferentPasswordException e){
+            forgetLabel.setText(e.getMessage());
+        }
+        catch (Exception e){
+            forgetLabel.setText("Wrong answer.");
         }
     }
     public static boolean isValidEmail(String email) {

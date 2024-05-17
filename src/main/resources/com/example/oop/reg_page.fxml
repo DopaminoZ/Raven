@@ -43,57 +43,69 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
   <children>
-    <AnchorPane prefHeight="394.0" prefWidth="804.0" VBox.vgrow="ALWAYS">
+    <AnchorPane prefHeight="400.0" prefWidth="792.0" VBox.vgrow="ALWAYS">
       <children>
             <TextField id="emailField" fx:id="emailField" layoutX="135.0" layoutY="65.0" prefHeight="25.0" prefWidth="173.0" />
             <PasswordField id="passField" fx:id="passField" layoutX="134.0" layoutY="103.0" prefHeight="25.0" prefWidth="173.0" />
-            <PasswordField id="passField" fx:id="confirmfield" layoutX="486.0" layoutY="103.0" prefHeight="25.0" prefWidth="173.0" />
+            <PasswordField id="passField" fx:id="confirmpassField" layoutX="477.0" layoutY="65.0" prefHeight="25.0" prefWidth="173.0" />
+            <DatePicker fx:id="dobfield" layoutX="477.0" layoutY="103.0" />
             <TextField id="firstnamefield" fx:id="firstnamefield" layoutX="134.0" layoutY="139.0" prefHeight="25.0" prefWidth="173.0" />
-            <TextField id="emailField" fx:id="lastnamefield" layoutX="486.0" layoutY="139.0" prefHeight="25.0" prefWidth="173.0" />
-            <DatePicker fx:id="dobfield" layoutX="134.0" layoutY="174.0" />
-        <Label alignment="CENTER" layoutX="24.0" layoutY="64.0" style="&#10;" text="Email " textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+            <TextField id="emailField" fx:id="lastnamefield" layoutX="478.0" layoutY="139.0" prefHeight="25.0" prefWidth="173.0" />
+            <TextField id="emailField" fx:id="questionField" layoutX="184.0" layoutY="180.0" prefHeight="25.0" prefWidth="246.0" />
+            <TextField id="emailField" fx:id="answerField" layoutX="184.0" layoutY="219.0" prefHeight="25.0" prefWidth="246.0" />
+        <Label alignment="CENTER" layoutX="24.0" layoutY="64.0" style="&#10;" text="Email " textAlignment="CENTER" wrapText="false">
           <font>
             <Font size="18.0" />
           </font>
         </Label>
-            <Label alignment="CENTER" layoutX="24.0" layoutY="274.0" style="&#10;" text="If you already have an account, click" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+            <Label alignment="CENTER" layoutX="22.0" layoutY="352.0" style="&#10;" text="If you already have an account, click" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Button id="signupButton" layoutX="24.0" layoutY="210.0" mnemonicParsing="false" onAction="#registerAccount" text="Signup" />
-            <Button layoutX="268.0" layoutY="272.0" mnemonicParsing="false" onAction="#switchtoLog" text="here" />
-            <Label alignment="CENTER" layoutX="315.0" layoutY="274.0" style="&#10;" text="to log in!" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+            <Button id="signupButton" layoutX="22.0" layoutY="269.0" mnemonicParsing="false" onAction="#registerAccount" text="Signup" />
+            <Button layoutX="266.0" layoutY="350.0" mnemonicParsing="false" onAction="#switchtoLogin" text="here" />
+            <Label alignment="CENTER" layoutX="313.0" layoutY="352.0" style="&#10;" text="to log in!" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="24.0" layoutY="102.0" style="&#10;" text="Password" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+            <Label alignment="CENTER" layoutX="24.0" layoutY="102.0" style="&#10;" text="Password" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="324.0" layoutY="102.0" style="&#10;" text="Confirm Password" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+            <Label alignment="CENTER" layoutX="325.0" layoutY="64.0" style="&#10;" text="Confirm Password" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="24.0" layoutY="138.0" style="&#10;" text="First Name" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+            <Label alignment="CENTER" layoutX="24.0" layoutY="138.0" style="&#10;" text="First Name" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="325.0" layoutY="139.0" style="&#10;" text="Last Name" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+            <Label alignment="CENTER" layoutX="325.0" layoutY="138.0" style="&#10;" text="Last Name" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="24.0" layoutY="173.0" style="&#10;" text="Date of birth" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+            <Label alignment="CENTER" layoutX="325.0" layoutY="102.0" style="&#10;" text="Date of birth" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="errorcheck" layoutX="129.0" layoutY="214.0" textFill="RED" />
+            <Label fx:id="errorcheckLabel" layoutX="98.0" layoutY="273.0" prefHeight="17.0" prefWidth="396.0" textFill="RED" />
+            <Label alignment="CENTER" layoutX="24.0" layoutY="179.0" style="&#10;" text="Security Question" textAlignment="CENTER" wrapText="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="25.0" layoutY="218.0" style="&#10;" text="Your Answer" textAlignment="CENTER" wrapText="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
   </children>
