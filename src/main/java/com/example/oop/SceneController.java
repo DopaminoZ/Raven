@@ -91,6 +91,29 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
+
+
+    public void switcher(ActionEvent event,String path) throws IOException{
+        root = FXMLLoader.load(getClass().getResource(path));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switcher(ActionEvent event,String path,User userData) throws IOException{
+        root = FXMLLoader.load(getClass().getResource(path));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public User userMaker(Document userData){
+        String fullName = userData.getString("fullname");
+        String[] tokens = fullName.split(" ");
+        User newUser = new User(userData.getString("userId"),tokens[0],tokens[1],userData.getString("_id"),userData.getString("password"),userData.getDate("dob"),userData.getString("secques"),userData.getString("quesans"));
+        return newUser;
+    }
     public void registerAccount(ActionEvent event) throws IOException{
         try {
             long count = accountcol.countDocuments();
@@ -103,7 +126,7 @@ public class SceneController {
                 throw new InvalidEmailException();
             User newUser = new User(String.valueOf(nextId), firstnamefield.getText(), lastnamefield.getText(), emailField.getText(), passField.getText(), dob, questionField.getText(), answerField.getText());
             addUserData(newUser, errorcheckLabel);
-            switchtoLogin(event);
+            switcher(event,"login_page.fxml");
             //System.out.println(newUser.getUserId() + newUser.getDoB() + newUser.getEmail() + newUser.getPassword());
         }
         catch(InvalidEmailException | DifferentPasswordException e){
@@ -120,8 +143,10 @@ public class SceneController {
         try{
             Document userData = loadUserData(loginemail.getText());
             if (userData != null) {
-                if(Objects.equals(userData.getString("password"), encodeSHA256(loginpass.getText())))
-                 errorchecklog.setText("Login successful!");
+                if(Objects.equals(userData.getString("password"), encodeSHA256(loginpass.getText()))) {
+                    errorchecklog.setText("Login successful!");
+                    switcher(event, "Newsfeed.fxml",userMaker(userData));
+                }
                 else
                     throw new InvalidPasswordException();
             } else {
