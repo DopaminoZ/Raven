@@ -171,6 +171,7 @@ public class SceneController {
                     newpassLabel.setDisable(false);
                     newpassField.setDisable(false);
                     newpassconfirmField.setDisable(false);
+                    forgetEmailField.setDisable(true);
                     forgetLabel.setText("");
             } else {
                 throw new Exception();
