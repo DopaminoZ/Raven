@@ -33,6 +33,7 @@
 -->
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -48,11 +49,11 @@
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
   <children>
-      <AnchorPane minHeight="-Infinity" prefHeight="50.0" prefWidth="900.0">
+      <AnchorPane minHeight="-Infinity" prefHeight="64.0" prefWidth="904.0">
          <children>
-            <ImageView fx:id="profileimageview" fitHeight="46.0" fitWidth="54.0" layoutX="840.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profileimageview" fitHeight="64.0" fitWidth="64.0" layoutX="840.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@307ce493-b254-4b2d-8ba4-d12c080d6651.jpg" />
+                  <Image url="@default_profile.jpg" />
                </image>
             </ImageView>
       <Label alignment="CENTER" layoutY="9.0" nodeOrientation="LEFT_TO_RIGHT" style="&#10;" text="ATTIABOOK" textAlignment="RIGHT" wrapText="false">
@@ -66,16 +67,19 @@
                   <Insets left="15.0" top="5.0" />
                </padding>
             </Label>
-            <Button layoutX="836.0" layoutY="-1.0" mnemonicParsing="false" onAction="#switchtoProfile" opacity="0.0" prefHeight="50.0" prefWidth="53.0" text="go to profile">
+            <Button layoutX="845.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchtoProfile" opacity="0.0" prefHeight="52.0" prefWidth="54.0" text="go to profile">
                <font>
                   <Font size="10.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </AnchorPane>
-    <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="648.0" prefWidth="904.0" VBox.vgrow="ALWAYS">
       <items>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+        <ScrollPane hbarPolicy="NEVER" prefHeight="490.0" prefWidth="616.0">
           <content>
             <AnchorPane id="Content" focusTraversable="true" minHeight="-1.0" minWidth="-1.0" prefHeight="546.0" prefWidth="612.0">
                      <children>
@@ -91,7 +95,7 @@
             </AnchorPane>
           </content>
         </ScrollPane>
-        <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="280.0">
+        <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="280.0">
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Messages" textAlignment="CENTER" textFill="$x2" wrapText="false" />
           </children>

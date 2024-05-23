@@ -39,7 +39,6 @@ public class MongoClientConnection {
     public static void updateUserData(Document user){
         accountcol.replaceOne(Filters.eq("_id", user.getString("_id")), user);
     }
-
     public static Document loadUserData(String email){
         Document query = new Document("_id", email);
         Document userDocument = (Document) accountcol.find(query).first();
@@ -47,7 +46,6 @@ public class MongoClientConnection {
                 /*for (String key : userDocument.keySet()) {
                     System.out.println(key + ": " + userDocument.get(key));
                 }*/
-
         return userDocument;
     }
     public static String encodeSHA256(String message) {
@@ -78,12 +76,8 @@ public class MongoClientConnection {
                 return image;
             }
             else{
-                return new Image(MongoClientConnection.class.getResourceAsStream("unknown.jpg"));
+                return new Image(MongoClientConnection.class.getResourceAsStream("default_profile.jpg"));
             }
 
     }
-
-
-
-
 }

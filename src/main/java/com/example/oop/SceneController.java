@@ -1,8 +1,6 @@
 package com.example.oop;
 
 import com.mongodb.MongoWriteException;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +11,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.types.Binary;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -79,7 +78,7 @@ public class SceneController {
     @FXML
     private ImageView profileimageview;
     @FXML
-    public Label userProfileName = new Label();
+    private Label userProfileName;
     public static User currentUser;
 
     private static final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -112,13 +111,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        Platform.runLater(() -> {
-            try {
-                loadUserProfile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        loadUserProfile(currentUser);
     }
     public void switchtoNewsfeed(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("newsfeed.fxml"));
@@ -126,15 +119,8 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        Platform.runLater(() -> {
-            try {
-                loadUserProfile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        loadUserProfile(currentUser);
     }
-
     public void switcher(ActionEvent event,String path) throws IOException{
         root = FXMLLoader.load(getClass().getResource(path));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -142,7 +128,6 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
-
     public void switcher(ActionEvent event,String path,User userData) throws IOException{
         root = FXMLLoader.load(getClass().getResource(path));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -150,16 +135,28 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
-    public void loadUserProfile() throws IOException{
-        profileimageview.setImage(loadImage(currentUser));
-        userProfileName.setText(currentUser.getFirstName() + currentUser.getLastName());
+    public void loadUserProfile(User user){
+        try {
+            profileimageview = (ImageView) scene.lookup("#profileimageview");
+            userProfileName = (Label) scene.lookup("#userProfileName");
+            user = currentUser;
+            if (user != null) {
+                profileimageview.setImage(loadImage(user));
+                userProfileName.setText(user.getFirstName() + " " + user.getLastName());
+            }
+        }
+        catch(NullPointerException e){
+            System.out.println("Not an issue, ignore trust..");
+        }
+        catch(Exception e){
+            System.out.println(e.getStackTrace());
+        }
     }
     public void uploadImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
-
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             String filePath = selectedFile.getAbsolutePath();
@@ -172,10 +169,8 @@ public class SceneController {
                 /* Debugging: Print the current document before updating
                 System.out.println("Updating document: " + currentDoc.toJson());*/
                 updateUserData(currentDoc);
-                loadUserProfile();
-
+                loadUserProfile(currentUser);
             }
-
         }
     }
     public Document reverseUserMaker(User x){
@@ -223,6 +218,7 @@ public class SceneController {
                     errorchecklog.setText("Login successful!");
                     currentUser = userMaker(userData);
                     switcher(event, "newsfeed.fxml",currentUser);
+                    loadUserProfile(currentUser);
                 }
                 else
                     throw new InvalidPasswordException();
@@ -236,7 +232,6 @@ public class SceneController {
         catch (Exception e){
             errorchecklog.setText("No account exists with that email.");
         }
-
     }
     public void forgetPassword(ActionEvent event) throws IOException{
         try{
@@ -283,6 +278,4 @@ public class SceneController {
     public static boolean isValidEmail(String email) {
         return Pattern.compile(EMAIL_REGEX).matcher(email).matches();
     }
-
-
 }
