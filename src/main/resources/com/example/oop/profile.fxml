@@ -59,16 +59,17 @@
                   <Insets left="15.0" top="5.0" />
                </padding>
             </Label>
+            <Button layoutX="601.0" layoutY="13.0" mnemonicParsing="false" onAction="#switchtoNewsfeed" text="&lt;" />
          </children>
       </AnchorPane>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <ImageView fx:id="profileImageHolder" fitHeight="122.0" fitWidth="150.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profileimageview" fitHeight="128.0" fitWidth="128.0" layoutX="14.0" pickOnBounds="true" smooth="false">
                <image>
-                  <Image url="@ca30b61e5f6e480229a932e7e87f9787.jpg" />
+                  <Image url="@307ce493-b254-4b2d-8ba4-d12c080d6651.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="180.0" layoutY="-1.0" text="BASEET NGM ">
+            <Label fx:id="userProfileName" layoutX="180.0" layoutY="-1.0" text="BASEET NGM ">
                <font>
                   <Font size="20.0" />
                </font>
