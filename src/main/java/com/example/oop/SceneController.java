@@ -128,6 +128,9 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
+    public void loadPfpImage() throws IOException{
+        profileImageHolder.setImage(loadImage(currentUser));
+    }
     public void uploadImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
@@ -138,11 +141,19 @@ public class SceneController {
         if (selectedFile != null) {
             String filePath = selectedFile.getAbsolutePath();
             currentUser.setImageData(storeImage(filePath));
-            updateUserData(reverseUserMaker(currentUser));
-            profileImageHolder.setImage(loadImage(currentUser));
+            Document currentDoc = loadUserData(currentUser.getEmail());
+            //Making sure as to not rehash the password again.
+            if (currentDoc != null) {
+                //Replacing just the image
+                currentDoc.put("image", currentUser.getImageData());
+                /* Debugging: Print the current document before updating
+                System.out.println("Updating document: " + currentDoc.toJson());*/
+                updateUserData(currentDoc);
+                loadPfpImage();
+
+            }
 
         }
-
     }
     public Document reverseUserMaker(User x){
         Document userData;
@@ -168,6 +179,7 @@ public class SceneController {
                 throw new InvalidEmailException();
             User newUser = new User(String.valueOf(nextId), firstnamefield.getText(), lastnamefield.getText(), emailField.getText(), passField.getText(), dob, questionField.getText(), answerField.getText(), null);
             addUserData(newUser, errorcheckLabel);
+            loadPfpImage();
             switcher(event,"login_page.fxml", currentUser);
             //System.out.println(newUser.getUserId() + newUser.getDoB() + newUser.getEmail() + newUser.getPassword());
         }
