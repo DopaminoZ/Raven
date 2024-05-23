@@ -9,10 +9,11 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private ArrayList<User> friendList = new ArrayList<>();
     private Date DoB;
     private String securityQuestion;
     private String questionAnswer;
+    private String imageUrl;
+    private ArrayList<User> friendList = new ArrayList<>();
     private ArrayList<Post> posts = new ArrayList<>();
 
     public User(String userId, String firstName, String lastName, String email, String password, Date doB, String question, String answer) {

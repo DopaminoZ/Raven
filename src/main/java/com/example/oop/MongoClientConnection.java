@@ -8,7 +8,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import org.bson.Document;
+import org.bson.types.Binary;
+
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -58,6 +62,27 @@ public class MongoClientConnection {
         }
         return null;
     }
+    public static Binary storeImage(String Path) throws IOException {
+        File imageFile = new File(Path);
+        FileInputStream fis = new FileInputStream(imageFile);
+        byte[] imageBytes = new byte[(int) imageFile.length()];
+        fis.read(imageBytes);
+        fis.close();
+        return new Binary(imageBytes);
+    }
+    public static Image loadImage(User user) throws IOException {
+        Document doc = (Document) accountcol.find(new Document("_id", user.getEmail())).first();
+        if (doc != null) {
+            Binary imageBinary = doc.get("image", Binary.class);
+            if (imageBinary != null) {
+                ByteArrayInputStream bis = new ByteArrayInputStream(imageBinary.getData());
+                Image image = new Image(bis);
+                return image;
+            }
+        }
+        return null;
+    }
+
 
 
 
