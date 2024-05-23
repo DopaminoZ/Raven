@@ -32,7 +32,7 @@ public class MongoClientConnection {
     public static void addUserData(User x, Label error){
 
             Document newUser = new Document("_id", x.getEmail()).append("userId", x.getUserId()).append("password", encodeSHA256(x.getPassword())).
-                    append("fullname", x.getFirstName() + " " + x.getLastName()).append("dob", x.getDoB()).append("secques", x.getSecurityQuestion()).append("quesans", encodeSHA256(x.getQuestionAnswer()));
+                    append("fullname", x.getFirstName() + " " + x.getLastName()).append("dob", x.getDoB()).append("secques", x.getSecurityQuestion()).append("quesans", encodeSHA256(x.getQuestionAnswer())).append("image", null);
             accountcol.insertOne(newUser);
             error.setText("Account successfully created! You can login in now.");
     }
@@ -41,6 +41,7 @@ public class MongoClientConnection {
         accountcol.replaceOne(Filters.eq("_id", user.getString("_id")), user);
 
     }
+
     public static Document loadUserData(String email){
         Document query = new Document("_id", email);
         Document userDocument = (Document) accountcol.find(query).first();
@@ -71,16 +72,17 @@ public class MongoClientConnection {
         return new Binary(imageBytes);
     }
     public static Image loadImage(User user) throws IOException {
-        Document doc = (Document) accountcol.find(new Document("_id", user.getEmail())).first();
-        if (doc != null) {
-            Binary imageBinary = doc.get("image", Binary.class);
+
+            Binary imageBinary = user.getImageData();
             if (imageBinary != null) {
                 ByteArrayInputStream bis = new ByteArrayInputStream(imageBinary.getData());
                 Image image = new Image(bis);
                 return image;
             }
-        }
-        return null;
+            else{
+                return new Image(MongoClientConnection.class.getResourceAsStream("unknown.jpg"));
+            }
+
     }
 
 

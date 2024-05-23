@@ -1,5 +1,7 @@
 package com.example.oop;
 
+import org.bson.types.Binary;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,11 +14,11 @@ public class User {
     private Date DoB;
     private String securityQuestion;
     private String questionAnswer;
-    private String imageUrl;
+    private Binary imageData;
     private ArrayList<User> friendList = new ArrayList<>();
     private ArrayList<Post> posts = new ArrayList<>();
 
-    public User(String userId, String firstName, String lastName, String email, String password, Date doB, String question, String answer) {
+    public User(String userId, String firstName, String lastName, String email, String password, Date doB, String question, String answer, Binary image) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +27,7 @@ public class User {
         DoB = doB;
         securityQuestion = question;
         questionAnswer = answer;
+        imageData = image;
     }
     public User(String email, String password) {
         this.email = email;
@@ -42,6 +45,14 @@ public class User {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public Binary getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(Binary imageData) {
+        this.imageData = imageData;
     }
 
     public String getEmail() {

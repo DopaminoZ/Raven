@@ -33,6 +33,7 @@
 -->
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -43,7 +44,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
   <children>
       <AnchorPane minHeight="-Infinity" prefHeight="50.0" prefWidth="900.0">
          <children>
@@ -62,7 +63,7 @@
       </AnchorPane>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profileImageHolder" fitHeight="122.0" fitWidth="150.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@ca30b61e5f6e480229a932e7e87f9787.jpg" />
                </image>
@@ -86,6 +87,7 @@
                   </AnchorPane>
               </content>
             </ScrollPane>
+            <Button layoutX="14.0" layoutY="126.0" mnemonicParsing="false" onAction="#uploadImage" text="Browse" />
       </children>
     </AnchorPane>
   </children>
