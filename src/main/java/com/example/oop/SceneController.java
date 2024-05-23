@@ -159,7 +159,7 @@ public class SceneController {
             if (userData != null) {
                 if(Objects.equals(userData.getString("password"), encodeSHA256(loginpass.getText()))) {
                     errorchecklog.setText("Login successful!");
-                    switcher(event, "Newsfeed.fxml",userMaker(userData));
+                    switcher(event, "newsfeed.fxml",userMaker(userData));
                 }
                 else
                     throw new InvalidPasswordException();

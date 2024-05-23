@@ -23,7 +23,7 @@ public class MongoClientConnection {
     private static MongoClient client = MongoClients.create(connectionString);
     private static MongoDatabase db = client.getDatabase("accountData");
     static MongoCollection accountcol = db.getCollection("accountCollection");
-    private static final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
 
     public static void addUserData(User x, Label error){
 
