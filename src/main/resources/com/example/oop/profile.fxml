@@ -32,41 +32,18 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-<Label alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" style="&#10;" text="ATTIABOOK" textAlignment="RIGHT" wrapText="false">
-         <font>
-    <Font size="18.0" fx:id="x1" />
-         </font>
-         <textFill>
-    <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
-         </textFill>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <padding>
-            <Insets left="15.0" top="5.0" />
-         </padding>
-      </Label>
-    <MenuBar layoutX="100.0" nodeOrientation="LEFT_TO_RIGHT" VBox.vgrow="NEVER">
+    <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -105,55 +82,14 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <items>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-          <content>
-            <AnchorPane id="Content" focusTraversable="true" minHeight="-1.0" minWidth="-1.0" prefHeight="546.0" prefWidth="612.0">
-                     <children>
-                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="NewsFeed" textAlignment="CENTER" wrapText="false">
-                           <font>
-                              <Font size="18.0" fx:id="x11" />
-                           </font>
-                           <textFill>
-                              <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
-                           </textFill>
-                        </Label>
-                        <Button layoutX="522.0" layoutY="98.0" mnemonicParsing="false" onAction="#switchtoprofile" prefHeight="27.0" prefWidth="75.0" text="Button" />
-                        <ImageView fx:id="profileimageview" fitHeight="76.0" fitWidth="79.0" layoutX="522.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@ca30b61e5f6e480229a932e7e87f9787.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-            </AnchorPane>
-          </content>
-        </ScrollPane>
-        <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="280.0">
-          <children>
-            <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Messages" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-          </children>
-        </AnchorPane>
-      </items>
-    </SplitPane>
-    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS">
-               <children>
-              <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="patent pending">
-                <font>
-                  <Font size="11.0" fx:id="x3" />
-                </font>
-                <textFill>
-                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
-                </textFill>
-              </Label>
-               </children></Pane>
-        <Label font="$x3" maxWidth="-1.0" text="2024" textFill="$x4" HBox.hgrow="NEVER" />
+        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
       </children>
-      <padding>
-        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-      </padding>
-    </HBox>
+    </AnchorPane>
   </children>
 </VBox>

@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.bson.Document;
 import java.io.IOException;
@@ -68,6 +70,10 @@ public class SceneController {
     private TextField forgetEmailField;
     @FXML
     private Button forgetpassButton;
+    @FXML
+    private ImageView profileimageview;
+    @FXML
+    Image myimage = new Image(getClass().getResourceAsStream("ca30b61e5f6e480229a932e7e87f9787.jpg"));
     private static final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
     public void switchtoReg(ActionEvent event) throws IOException {
@@ -92,6 +98,13 @@ public class SceneController {
         stage.show();
     }
 
+    public void switchtoprofile(ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("profile.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void switcher(ActionEvent event,String path) throws IOException{
         root = FXMLLoader.load(getClass().getResource(path));
@@ -108,6 +121,7 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
+
     public User userMaker(Document userData){
         String fullName = userData.getString("fullname");
         String[] tokens = fullName.split(" ");
