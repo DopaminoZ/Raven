@@ -5,7 +5,7 @@
     -fx-background-insets: 0, 4;
 }
 #regPage{
-    -fx-background-color:#0c0c0c;
+    -fx-background-color:#000910;
     -fx-font-family:'Gill Sans MT';
 }
 .label{
@@ -43,4 +43,7 @@
     -fx-background-radius: 0 10 10 0;
     -fx-border-color: #181818;
 
+}
+.vbox{
+    -fx-background-color:#0c0c0c;
 }

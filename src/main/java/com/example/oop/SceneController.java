@@ -90,6 +90,7 @@ public class SceneController {
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.show();
+
     }
     public void switchtoLogin(ActionEvent event) throws IOException{
         root = FXMLLoader.load(getClass().getResource("login_page.fxml"));
