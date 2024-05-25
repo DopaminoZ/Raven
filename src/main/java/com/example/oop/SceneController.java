@@ -231,9 +231,10 @@ public class SceneController {
             System.out.println("anchorPane is null");
         }}*/
     public void postMaker(AnchorPane anchorPane, Post post) throws IOException {
-        anchorPane.setStyle("-fx-background-color: #f0f0f0;"); // Set background color of AnchorPane
+        anchorPane.setStyle("-fx-background-color: #000910;"); // Set background color of AnchorPane
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10)); // Add some padding to the VBox
+        vbox.setSpacing(30);
         HBox profile = new HBox();
         profile.setPadding(new Insets(10));
         Document userData = loadUserData(post.getOwner());
@@ -277,7 +278,7 @@ public class SceneController {
 
         HBox hbox = new HBox();
         hbox.setSpacing(10); // Add some spacing between elements in the HBox
-        hbox.setStyle("-fx-background-color: #eee;"); // Set background color of HBox
+        hbox.setStyle("-fx-background-color: #000910;"); // Set background color of HBox
 
         ImageView raven1 = new ImageView();
         raven1.setFitHeight(32);
