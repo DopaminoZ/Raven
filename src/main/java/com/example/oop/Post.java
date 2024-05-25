@@ -3,6 +3,7 @@ import javafx.scene.image.Image;
 import javafx.scene.media.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Post {
     private User owner;
@@ -10,6 +11,7 @@ public class Post {
     private Media vid;
     private Image image;
     private ArrayList<User> likes = new ArrayList<>();
+    private Date dateCreated = new Date();
 
     public Post(User owner, String caption, Media vid) {
         this.caption = caption;
