@@ -15,13 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -135,11 +133,11 @@ public class SceneController {
     public static User currentUser;
     public static User visitedUser;
     private static final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-    public void pause(){
-        medPlayer.pause();
+    public void pause(MouseEvent event, MediaPlayer selected){
+        selected.pause();
     }
-    public void play(){
-        medPlayer.play();
+    public void play(MouseEvent event, MediaPlayer selected){
+        selected.play();
     }
 
     public void switchtoReg(ActionEvent event) throws IOException {
@@ -242,26 +240,29 @@ public class SceneController {
         text.setFill(Color.BLACK); // Set text color
         textFlow.getChildren().add(text);
 
-
+        StackPane content = new StackPane();
         Image image1 = new Image(getClass().getResourceAsStream("raven_1_invert.png"));
         ImageView imageView = new ImageView();
         imageView.setFitHeight(300);
         imageView.setFitWidth(525);
         imageView.setPreserveRatio(true);
         imageView.setImage(image1);
+        imageView.setVisible(false);
 
-       /* Media video = new Media(getClass().getResource("testVideo.mp4"));
+        Media video = new Media(getClass().getResource("testVideo.mp4").toString());
+        MediaPlayer playz  = new MediaPlayer(video);
         MediaView mediaView = new MediaView();
-        mediaView.setMediaPlayer(new MediaPlayer(video));
+        mediaView.setMediaPlayer(playz);
+        playz.play();
         mediaView.setFitHeight(300);
         mediaView.setFitWidth(525);
-        mediaView.setPreserveRatio(true);*/
-
+        mediaView.setPreserveRatio(true);
+        content.getChildren().addAll(imageView,mediaView);
         // Set the position of the ImageView and MediaView to the same values
-        /*imageView.setLayoutX(0);
+        imageView.setLayoutX(0);
         imageView.setLayoutY(0);
         mediaView.setLayoutX(0);
-        mediaView.setLayoutY(0);*/
+        mediaView.setLayoutY(0);
 
         HBox hbox = new HBox();
         hbox.setSpacing(10); // Add some spacing between elements in the HBox
@@ -271,25 +272,24 @@ public class SceneController {
         raven1.setFitHeight(32);
         raven1.setFitWidth(42);
         raven1.setPreserveRatio(true);
-        raven1.setImage(image1); // Set text color to a darker gray
-
+        raven1.setImage(new Image(getClass().getResourceAsStream("playButton.png"))); // Set text color to a darker gray
+        raven1.setOnMouseClicked(e -> play(e, playz));
         ImageView raven2 = new ImageView();
         raven2.setFitHeight(32);
         raven2.setFitWidth(42);
         raven2.setPreserveRatio(true);
-        raven2.setImage(image1);
-
-
+        raven2.setImage(new Image(getClass().getResourceAsStream("pauseButton.png")));
+        raven2.setOnMouseClicked(e -> pause(e, playz));
         ImageView raven3 = new ImageView();
         raven3.setFitHeight(32);
         raven3.setFitWidth(42);
         raven3.setPreserveRatio(true);
-        raven3.setImage(image1);
+        raven3.setImage(new Image(getClass().getResourceAsStream("likehollow.png")));
         Label label3 = new Label("Label 3");
         label3.setTextFill(Color.rgb(50, 50, 50)); // Set text color to a darker gray
 
         hbox.getChildren().addAll(label3,raven1,raven2,raven3);
-        vbox.getChildren().addAll(textFlow,imageView,hbox);
+        vbox.getChildren().addAll(textFlow,content,hbox);
         anchorPane.getChildren().add(vbox);
     }
 
@@ -315,7 +315,6 @@ public class SceneController {
             parent.getChildren().add(anchorPane);
         }
     }
-
     public void loadVideoFromFileChooser() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Video/Image File");

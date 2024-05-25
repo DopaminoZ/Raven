@@ -45,7 +45,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
@@ -83,10 +82,7 @@
       <items>
             <AnchorPane id="Content" focusTraversable="true" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="1038.0">
                <children>
-                  <MediaView fx:id="testMedia" fitHeight="300.0" fitWidth="550.0" layoutX="-204.0" layoutY="149.0" />
                   <Button layoutX="800.0" layoutY="216.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
-                  <Button fx:id="playButton" layoutX="14.0" layoutY="492.0" mnemonicParsing="false" onAction="#play" prefHeight="40.0" prefWidth="41.0" text="►" visible="false" />
-                  <Button fx:id="pauseButton" layoutX="76.0" layoutY="492.0" mnemonicParsing="false" onAction="#pause" prefHeight="40.0" prefWidth="41.0" text="⏸" visible="false" />
                   <TextArea layoutX="371.0" layoutY="6.0" prefHeight="139.0" prefWidth="889.0" />
                   <Button layoutX="669.0" layoutY="221.0" mnemonicParsing="false" onAction="#finalizePost" text="Post" />
                   <ImageView fx:id="testPostImage" fitHeight="300.0" fitWidth="550.0" layoutX="-183.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
