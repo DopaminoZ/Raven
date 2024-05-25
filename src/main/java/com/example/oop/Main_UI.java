@@ -19,6 +19,7 @@ public class Main_UI extends Application {
             stage.setFullScreenExitHint("");
             stage.setScene(scene);
             stage.show();
+            
         }
         catch(Exception e){
             e.printStackTrace();
