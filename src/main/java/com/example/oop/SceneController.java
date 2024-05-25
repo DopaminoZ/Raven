@@ -236,6 +236,7 @@ public class SceneController {
         vbox.setSpacing(30);
         HBox profile = new HBox();
         profile.setPadding(new Insets(10));
+        profile.setSpacing(30);
         Document userData = loadUserData(post.getOwner());
         if(userData == null){
             System.out.println("no user");
@@ -250,7 +251,7 @@ public class SceneController {
         profile.getChildren().addAll(pfp,name);
         TextFlow textFlow = new TextFlow();
         Text text = new Text(post.getCaption());
-        textFlow.setStyle("-fx-font-color: #f5f5f5;-fx-font-family:'Gill Sans MT';"); // Set text color
+        text.setStyle("-fx-fill: #f5f5f5; -fx-font-family: 'Gill Sans MT'; -fx-font-size: 30px;"); // Set text color and font family
         textFlow.getChildren().add(text);
         StackPane content = new StackPane();
         Image image1 = new Image(getClass().getResourceAsStream("raven_1_invert.png"));
@@ -296,10 +297,11 @@ public class SceneController {
         raven3.setFitWidth(42);
         raven3.setPreserveRatio(true);
         raven3.setImage(new Image(getClass().getResourceAsStream("likehollow.png")));
-        Label label3 = new Label("Label 3");
+        Label label3 = new Label(String.valueOf(post.getLikes().size()));
+        label3.setStyle("-fx-font-size: 20px");
         label3.setTextFill(Color.rgb(50, 50, 50)); // Set text color to a darker gray
 
-        hbox.getChildren().addAll(label3,raven1,raven2,raven3);
+        hbox.getChildren().addAll(raven1,raven2,raven3,label3);
         vbox.getChildren().addAll(profile,textFlow,content,hbox);
         anchorPane.getChildren().add(vbox);
     }
