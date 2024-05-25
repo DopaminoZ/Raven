@@ -195,7 +195,8 @@ public class SceneController {
         myvbox = (VBox) scene.lookup("#myvbox");
         myvbox.setPrefWidth(600); // or any other width you prefer
         myvbox.setPrefHeight(800);
-        makeitrain(currentUser.posts.size(),myvbox);
+        //makeitrain(currentUser.posts.size(),myvbox);
+        makeitrain(1,myvbox);
 
         loadUserProfile(currentUser);
         messagesvbox = (VBox)scene.lookup("#messagesvbox");
@@ -229,17 +230,28 @@ public class SceneController {
         } else {
             System.out.println("anchorPane is null");
         }}*/
-    public void postMaker(AnchorPane anchorPane){
+    public void postMaker(AnchorPane anchorPane, Post post) throws IOException {
         anchorPane.setStyle("-fx-background-color: #f0f0f0;"); // Set background color of AnchorPane
-
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10)); // Add some padding to the VBox
-
+        HBox profile = new HBox();
+        profile.setPadding(new Insets(10));
+        Document userData = loadUserData(post.getOwner());
+        if(userData == null){
+            System.out.println("no user");
+            return;
+        }
+        User owner = userMaker(userData);
+        Image sora = loadImage(owner);
+        ImageView pfp = new ImageView(sora);
+        pfp.setFitHeight(75);
+        pfp.setFitWidth(75);
+        Label name = new Label(owner.getFirstName() + " " + owner.getLastName());
+        profile.getChildren().addAll(pfp,name);
         TextFlow textFlow = new TextFlow();
-        Text text = new Text("This is a sample text");
+        Text text = new Text(post.getCaption());
         text.setFill(Color.BLACK); // Set text color
         textFlow.getChildren().add(text);
-
         StackPane content = new StackPane();
         Image image1 = new Image(getClass().getResourceAsStream("raven_1_invert.png"));
         ImageView imageView = new ImageView();
@@ -249,11 +261,10 @@ public class SceneController {
         imageView.setImage(image1);
         imageView.setVisible(false);
 
-        Media video = new Media(getClass().getResource("testVideo.mp4").toString());
+        Media video = post.getVid();
         MediaPlayer playz  = new MediaPlayer(video);
         MediaView mediaView = new MediaView();
         mediaView.setMediaPlayer(playz);
-        playz.play();
         mediaView.setFitHeight(300);
         mediaView.setFitWidth(525);
         mediaView.setPreserveRatio(true);
@@ -289,15 +300,16 @@ public class SceneController {
         label3.setTextFill(Color.rgb(50, 50, 50)); // Set text color to a darker gray
 
         hbox.getChildren().addAll(label3,raven1,raven2,raven3);
-        vbox.getChildren().addAll(textFlow,content,hbox);
+        vbox.getChildren().addAll(profile,textFlow,content,hbox);
         anchorPane.getChildren().add(vbox);
     }
 
-    public void makeitrain(int num,VBox parent){
-        for(int i=0; i<=num; i++){
+    public void makeitrain(int num,VBox parent) throws IOException {
+        for(int i=0; i<num; i++){
             AnchorPane anchorPane = new AnchorPane();
             anchorPane.setId("anchor"+i);
-            postMaker(anchorPane);
+            Media x = new Media(getClass().getResource("testVideo.mp4").toString());
+            postMaker(anchorPane, new Post("a@gmail.com", "yayayoyo", x));
             parent.getChildren().add(anchorPane);
         }
     }
