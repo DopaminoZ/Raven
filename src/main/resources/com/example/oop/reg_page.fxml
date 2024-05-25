@@ -55,10 +55,10 @@
                </opaqueInsets>
             </TextField>
             <DatePicker fx:id="dobfield" layoutX="1089.0" layoutY="251.0" />
-            <PasswordField id="passField" fx:id="passField" layoutX="353.0" layoutY="450.0" prefHeight="25.0" prefWidth="173.0" />
-            <PasswordField id="passField" fx:id="confirmpassField" layoutX="1103.0" layoutY="452.0" prefHeight="25.0" prefWidth="173.0" />
             <TextField id="firstnamefield" fx:id="firstnamefield" layoutX="353.0" layoutY="353.0" prefHeight="25.0" prefWidth="173.0" />
             <TextField id="emailField" fx:id="lastnamefield" layoutX="1103.0" layoutY="344.0" prefHeight="25.0" prefWidth="173.0" />
+            <PasswordField id="passField" fx:id="passField" layoutX="353.0" layoutY="450.0" prefHeight="25.0" prefWidth="173.0" />
+            <PasswordField id="passField" fx:id="confirmpassField" layoutX="1103.0" layoutY="452.0" prefHeight="25.0" prefWidth="173.0" />
             <TextField id="emailField" fx:id="questionField" layoutX="353.0" layoutY="547.0" prefHeight="25.0" prefWidth="246.0" />
             <TextField id="emailField" fx:id="answerField" layoutX="353.0" layoutY="648.0" prefHeight="25.0" prefWidth="246.0" />
             <Label alignment="CENTER" layoutX="29.0" layoutY="267.0" style="&#10;" text="Email " textAlignment="CENTER" wrapText="false">
@@ -106,7 +106,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="errorcheckLabel" layoutX="29.0" layoutY="356.0" prefHeight="17.0" prefWidth="396.0" textFill="RED" />
+            <Label id="exp" fx:id="errorcheckLabel" layoutX="761.0" layoutY="649.0" prefHeight="17.0" prefWidth="396.0" textFill="RED" />
             <Label alignment="CENTER" layoutX="24.0" layoutY="559.0" style="&#10;" text="Security Question" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />

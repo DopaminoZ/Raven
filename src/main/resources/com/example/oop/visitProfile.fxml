@@ -67,15 +67,15 @@
                   <Image url="@default_profile.jpg" />
                </image>
             </ImageView>
-            <Label fx:id="visituserProfileName" layoutX="498.0" layoutY="171.0" text="BASEET NGM ">
+            <Label fx:id="visituserProfileName" layoutX="444.0" layoutY="77.0" text="BASEET NGM ">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
             <TextFlow layoutX="529.0" layoutY="477.0" prefHeight="122.0" prefWidth="207.0" />
-            <ScrollPane hbarPolicy="NEVER" layoutX="21.0" layoutY="380.0" prefHeight="300.0" prefWidth="423.0">
+            <ScrollPane hbarPolicy="NEVER" layoutX="21.0" layoutY="380.0" prefHeight="337.0" prefWidth="423.0">
                <content>
-                  <VBox fx:id="Vboxvisit" prefHeight="300.0" prefWidth="422.0" styleClass="vbox">
+                  <VBox fx:id="Vboxvisit" prefHeight="337.0" prefWidth="422.0" styleClass="vbox">
                      <children>
                         <Label text="Following">
                            <font>
@@ -88,6 +88,16 @@
             </ScrollPane>
             <Button fx:id="followButton" layoutX="1182.0" layoutY="31.0" mnemonicParsing="false" onAction="#followUser" text="Follow" />
             <Button fx:id="unfollowButton" layoutX="1182.0" layoutY="31.0" mnemonicParsing="false" onAction="#unfollowUser" text="Unfollow" visible="false" />
+            <Label id="vDesc" fx:id="vDesc" layoutX="447.0" layoutY="143.0" text="a">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ScrollPane hbarPolicy="NEVER" layoutX="566.0" layoutY="197.0" prefHeight="520.0" prefWidth="960.0">
+               <content>
+                  <VBox fx:id="visitVbox" layoutX="566.0" layoutY="179.0" prefHeight="520.0" prefWidth="954.0" styleClass="vbox" />
+               </content>
+            </ScrollPane>
       </children>
     </AnchorPane>
       <AnchorPane id="anchor" prefHeight="60.0" prefWidth="1540.0">

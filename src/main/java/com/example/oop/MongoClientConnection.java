@@ -27,9 +27,6 @@ public class MongoClientConnection {
     private static MongoDatabase db = client.getDatabase("accountData");
     static MongoCollection accountcol = db.getCollection("accountCollection");
     static MongoCollection postcol = db.getCollection("postCollection");
-
-
-
     public static void addUserData(User x, Label error){
             Document newUser = new Document("_id", x.getEmail()).append("userId", x.getUserId()).append("password", encodeSHA256(x.getPassword())).
                     append("fullname", x.getFirstName() + " " + x.getLastName()).append("dob", x.getDoB()).append("secques", x.getSecurityQuestion()).append("quesans", encodeSHA256(x.getQuestionAnswer())).append("image", null).append("friendList", null).append("posts", null);

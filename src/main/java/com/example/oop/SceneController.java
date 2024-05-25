@@ -34,9 +34,11 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
 import static com.example.oop.MongoClientConnection.*;
@@ -116,11 +118,19 @@ public class SceneController {
     @FXML
     private VBox Vboxvisit;
     @FXML
+    private Label vDesc;
+    @FXML
     private AnchorPane messagespane;
     @FXML
     private VBox messagesvbox;
     @FXML
+    private VBox visitVbox;
+    @FXML
     private VBox profilevboxnews;
+    @FXML
+    private Label description;
+    @FXML
+    private Label searchexp;
     public static int selector;
     public static File selectedFile;
     public static User currentUser;
@@ -132,7 +142,6 @@ public class SceneController {
     public void play(MouseEvent event, MediaPlayer selected){
         selected.play();
     }
-
     public void switchtoReg(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("reg_page.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -163,7 +172,6 @@ public class SceneController {
     }
 
     public void switchtoProfile(ActionEvent event) throws IOException{
-
         root = FXMLLoader.load(getClass().getResource("profile.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -173,7 +181,7 @@ public class SceneController {
         stage.show();
         loadUserProfile(currentUser);
         profilevboxnews = (VBox) scene.lookup("#profilevboxnews");
-        updateNewsfeedProfile(profilevboxnews);
+        updateNewsfeedProfile(profilevboxnews, currentUser);
     }
     public void updateNewsfeed(VBox newsfeedvbox) throws IOException {
         ArrayList<Post> postsToView = new ArrayList<>();
@@ -183,7 +191,6 @@ public class SceneController {
             ArrayList<Post> friendPosts = getPostsForUser(friendEmail);
             postsToView.addAll(friendPosts);
         }
-
         Collections.sort(postsToView, new Comparator<Post>() {
             public int compare(Post p1, Post p2) {
                 return p2.getDateCreated().compareTo(p1.getDateCreated());
@@ -191,10 +198,10 @@ public class SceneController {
         });
         makeitrain(newsfeedvbox, postsToView);
     }
-    public void updateNewsfeedProfile(VBox newsfeedvbox) throws IOException {
+    public void updateNewsfeedProfile(VBox newsfeedvbox, User user) throws IOException {
         ArrayList<Post> postsToView = new ArrayList<>();
         ArrayList<String> friendListz = new ArrayList<>();
-        friendListz.add(currentUser.getEmail());
+        friendListz.add(user.getEmail());
         for (String friendEmail : friendListz) {
             ArrayList<Post> friendPosts = getPostsForUser(friendEmail);
             postsToView.addAll(friendPosts);
@@ -227,12 +234,10 @@ public class SceneController {
         stage.show();
         myvbox = (VBox) scene.lookup("#myvbox");
         contentCaption = (TextField) scene.lookup("#contentCaption");
-        //makeitrain(currentUser.posts.size(),myvbox);
-        //makeitrain(1,myvbox);
         updateNewsfeed(myvbox);
         loadUserProfile(currentUser);
         messagesvbox = (VBox)scene.lookup("#messagesvbox");
-        messagesvbox.setPrefWidth(600); // or any other width you prefer
+        messagesvbox.setPrefWidth(600);
         messagesvbox.setPrefHeight(800);
         makeitrainmessages(10,messagesvbox);
     }
@@ -253,15 +258,7 @@ public class SceneController {
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
         stage.show();
-
     }
-    /*public void makeitrainMessages(AnchorPane anchorPane){
-        anchorPane = (AnchorPane) scene.lookup("#messagespane");
-        if (messagespane != null) {
-
-        } else {
-            System.out.println("anchorPane is null");
-        }}*/
     public void postMaker(AnchorPane anchorPane, Post post) throws IOException {
         VBox vboxz = new VBox();
         vboxz.setPadding(new Insets(10)); // Add some padding to the VBox
@@ -400,7 +397,6 @@ public class SceneController {
             anchorPane.getChildren().add(vboxz);
         }
     }
-
     public void makeitrain(VBox parent, ArrayList<Post> postsToView) throws IOException {
         for(int i=0; i<postsToView.size(); i++){
             AnchorPane anchorPane = new AnchorPane();
@@ -411,9 +407,6 @@ public class SceneController {
         postsToView.clear();
 
     }
-
-
-
     public void makeitrainmessages(int num,VBox parent){
         for(int i=0; i<=num; i++){
             AnchorPane anchorPane = new AnchorPane();
@@ -523,6 +516,7 @@ public class SceneController {
                     switcher(event, "visitProfile.fxml");
                     followButton = (Button) scene.lookup("#followButton");
                     unfollowButton = (Button) scene.lookup("#unfollowButton");
+                    visitVbox = (VBox) scene.lookup("#visitVbox");
                 if(test!=null){
                     if (test.contains(visitedUser.getEmail())){
                         followButton.setVisible(false);
@@ -565,7 +559,7 @@ public class SceneController {
             }
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
+            searchexp.setText("User not found, try again..");
         }
 
     }
@@ -620,10 +614,14 @@ public class SceneController {
             profileimageview = (ImageView) scene.lookup("#profileimageview");
             userProfileName = (Label) scene.lookup("#userProfileName");
             followingVBox = (VBox) scene.lookup("#followingVBox");
+            description = (Label) scene.lookup("#description");
             user = currentUser;
             if (user != null) {
                 profileimageview.setImage(loadImage(user));
                 userProfileName.setText(user.getFirstName() + " " + user.getLastName());
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = formatter.format(user.getDoB());
+                description.setText("Email: " + user.getEmail() +" - "+ "Date of birth: " + formattedDate);
                 loadNetworkIntoProfile();
             }
         }
@@ -639,11 +637,15 @@ public class SceneController {
             visitprofileimageview = (ImageView) scene.lookup("#visitprofileimageview");
             visituserProfileName = (Label) scene.lookup("#visituserProfileName");
             Vboxvisit = (VBox) scene.lookup("#Vboxvisit");
+            vDesc = (Label) scene.lookup("#vDesc");
+            updateNewsfeedProfile(visitVbox, visitedUser);
             if (visitedUser != null) {
                 visitprofileimageview.setImage(loadImage(visitedUser));
                 visituserProfileName.setText(visitedUser.getFirstName() + " " + visitedUser.getLastName());
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = formatter.format(visitedUser.getDoB());
+                vDesc.setText("Email: " + visitedUser.getEmail() +" - "+ "Date of birth: " + formattedDate);
                 loadVisitNetworkIntoProfile();
-
             }
         }
         catch(Exception e){
