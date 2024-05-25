@@ -5,6 +5,19 @@
     -fx-background-radius: 15, 0; 
     -fx-background-insets: 0, 4;
 }
+#changepfpbutton{
+    -fx-font-size:28px;
+}
+#ravenlabel{
+    -fx-font-family: 'Comic Sans MS';
+    -fx-font-size: 30px;
+}
+#welcome{
+    -fx-font-size: 50px;
+}
+#description{
+    -fx-font-color:#f5f5f5;
+}
 #anchor,#Content
 {
     -fx-background-color:#000910;
