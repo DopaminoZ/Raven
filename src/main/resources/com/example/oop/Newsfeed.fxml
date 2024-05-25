@@ -69,6 +69,11 @@
                   <Image url="@raven_1_invert.png" />
                </image>
             </ImageView>
+            <Button layoutX="1222.0" layoutY="-7.0" mnemonicParsing="false" onAction="#switchtoLogin" prefHeight="75.0" prefWidth="178.0" text="Sign out">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
     <SplitPane dividerPositions="0.5" focusTraversable="true" maxHeight="-Infinity" prefHeight="648.0" prefWidth="904.0" VBox.vgrow="ALWAYS">
@@ -81,9 +86,18 @@
                            <children>
                               <AnchorPane id="anchor" maxWidth="-Infinity" prefHeight="294.0" prefWidth="1054.0">
                                  <children>
-                                    <Button layoutX="703.0" layoutY="161.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
-                                    <Button layoutX="696.0" layoutY="46.0" mnemonicParsing="false" onAction="#finalizePost" text="Post" />
-                                    <TextField id="contentCap" fx:id="contentCaption" layoutX="29.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="199.0" prefWidth="600.0" />
+                                    <Button layoutX="703.0" layoutY="161.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></Button>
+                                    <Button layoutX="696.0" layoutY="46.0" mnemonicParsing="false" onAction="#finalizePost" text="Post">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></Button>
+                                    <TextField id="contentCap" fx:id="contentCaption" layoutX="29.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="199.0" prefWidth="600.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></TextField>
                                  </children></AnchorPane>
                            </children>
                         </VBox>
