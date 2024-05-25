@@ -44,7 +44,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
@@ -92,10 +91,6 @@
                               <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
                            </textFill>
                         </Label>
-                        <MediaView fx:id="testMedia" fitHeight="300.0" fitWidth="550.0" layoutX="14.0" layoutY="89.0" />
-                        <Button layoutX="538.0" layoutY="497.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
-                        <Button fx:id="play" layoutX="14.0" layoutY="415.0" mnemonicParsing="false" onAction="#play" prefHeight="40.0" prefWidth="41.0" text="►" />
-                        <Button fx:id="pause" layoutX="76.0" layoutY="415.0" mnemonicParsing="false" onAction="#pause" prefHeight="40.0" prefWidth="41.0" text="⏸" />
                      </children>
             </AnchorPane>
           </content>
