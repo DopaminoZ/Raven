@@ -16,6 +16,7 @@ public class Main_UI extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("login_page.fxml"));
             Scene scene = new Scene(root);
             stage.setFullScreen(true);
+            stage.setFullScreenExitHint("");
             stage.setScene(scene);
             stage.show();
         }

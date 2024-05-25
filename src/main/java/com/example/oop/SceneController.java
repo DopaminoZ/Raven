@@ -119,6 +119,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
 
     }
@@ -128,6 +129,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
     }
     public void switchtoForgetPass(ActionEvent event) throws IOException{
@@ -136,6 +138,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
     }
 
@@ -145,6 +148,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
         loadUserProfile(currentUser);
     }
@@ -154,6 +158,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
         loadUserProfile(currentUser);
     }
@@ -163,6 +168,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
     }
     public void switcher(ActionEvent event,String path,User userData) throws IOException{
@@ -171,6 +177,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
 
     }
