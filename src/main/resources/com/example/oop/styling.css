@@ -4,10 +4,9 @@
     -fx-background-radius: 8, 0; 
     -fx-background-insets: 0, 4;
 }
-#anchor{
+#regPage{
     -fx-background-color:#000910;
     -fx-font-family:'Gill Sans MT';
-    -fx-border-color:f5f5f5;
 }
 .label{
     -fx-font-family:'Gill Sans MT';
@@ -47,8 +46,4 @@
 }
 .vbox{
     -fx-background-color:#0c0c0c;
-}
-#image{
-    -fx-background-radius: 10; /* same value as Arc Width and Arc Height */
-    -fx-background-color: transparent;
 }
