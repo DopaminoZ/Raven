@@ -37,7 +37,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -50,7 +49,7 @@
   <children>
       <AnchorPane id="anchor" minHeight="-Infinity" prefHeight="94.0" prefWidth="1540.0">
          <children>
-            <Button layoutX="1457.0" layoutY="13.0" mnemonicParsing="false" onAction="#switchtoNewsfeed" text="&lt;">
+            <Button layoutX="1457.0" layoutY="13.0" mnemonicParsing="false" onAction="#switchtoProfile" text="&lt;">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
@@ -63,12 +62,12 @@
       </AnchorPane>
     <AnchorPane id="anchor" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <ImageView fx:id="profileimageview" fitHeight="300.0" fitWidth="300.0" layoutX="49.0" layoutY="41.0" pickOnBounds="true" smooth="false">
+            <ImageView fx:id="visitprofileimageview" fitHeight="300.0" fitWidth="300.0" layoutX="49.0" layoutY="41.0" pickOnBounds="true" smooth="false">
                <image>
                   <Image url="@default_profile.jpg" />
                </image>
             </ImageView>
-            <Label fx:id="userProfileName" layoutX="498.0" layoutY="171.0" text="BASEET NGM ">
+            <Label fx:id="visituserProfileName" layoutX="498.0" layoutY="171.0" text="BASEET NGM ">
                <font>
                   <Font size="20.0" />
                </font>
@@ -76,25 +75,19 @@
             <TextFlow layoutX="529.0" layoutY="477.0" prefHeight="122.0" prefWidth="207.0" />
             <ScrollPane hbarPolicy="NEVER" layoutX="55.0" layoutY="454.0" prefHeight="258.0" prefWidth="379.0">
                <content>
-                  <VBox fx:id="followingVBox" maxHeight="1.7976931348623157E308" prefHeight="257.0" prefWidth="377.0" styleClass="vbox">
+                <AnchorPane id="anchor" minHeight="0.0" minWidth="0.0" prefHeight="261.0" prefWidth="382.0">
                      <children>
-                        <Label fx:id="followingLabel" alignment="TOP_LEFT" lineSpacing="1.0" text="Following">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
+                        <Label layoutX="14.0" layoutY="14.0" text="Friends">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                         </Label>
                      </children>
-                  </VBox>
+                  </AnchorPane>
                </content>
             </ScrollPane>
-            <Button layoutX="34.0" layoutY="369.0" mnemonicParsing="false" onAction="#uploadImage" text="Change profile picture">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <TextField fx:id="searchBarProfile" layoutX="1003.0" layoutY="41.0" onKeyPressed="#searchForUser" promptText="Search for people!" />
-            <Button fx:id="Search" layoutX="1316.0" layoutY="36.0" mnemonicParsing="false" onAction="#searchForUser" text="Search" />
-            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <Button fx:id="followButton" layoutX="1182.0" layoutY="31.0" mnemonicParsing="false" onAction="#followUser" text="Follow" />
+            <Button fx:id="unfollowButton" layoutX="1182.0" layoutY="31.0" mnemonicParsing="false" onAction="#unfollowUser" text="Unfollow" visible="false" />
       </children>
     </AnchorPane>
       <AnchorPane id="anchor" prefHeight="60.0" prefWidth="1540.0">
