@@ -341,31 +341,43 @@ public class SceneController {
             Document userData = searchForUserByName(searchBarProfile.getText());
             Document userData2 = loadUserData(searchBarProfile.getText());
             if (userData != null) {
+
                     visitedUser = userMaker(userData);
-                    ArrayList<String> test  = currentUser.getFriendList();
+                    ArrayList<String> test = currentUser.getFriendList();
                     switcher(event, "visitProfile.fxml");
                     followButton = (Button) scene.lookup("#followButton");
                     unfollowButton = (Button) scene.lookup("#unfollowButton");
-                     if (test.contains(visitedUser.getEmail())){
-                     followButton.setVisible(false);
-                     unfollowButton.setVisible(true);
-                     }
-                     else{
-                     followButton.setVisible(true);
-                     unfollowButton.setVisible(false);
-                     }
+                if(test!=null){
+                    if (test.contains(visitedUser.getEmail())){
+                        followButton.setVisible(false);
+                        unfollowButton.setVisible(true);
+                    }
+                    else{
+                        followButton.setVisible(true);
+                        unfollowButton.setVisible(false);
+                    }}
+                else{
+                    followButton.setVisible(true);
+                    unfollowButton.setVisible(false);
+                }
                     loadVisitedUserProfile();
+
             }
             else if(userData2 != null){
                 visitedUser = userMaker(userData2);
-                ArrayList<String> test  = currentUser.getFriendList();
+                ArrayList<String> test  =  currentUser.getFriendList();
                 switcher(event, "visitProfile.fxml");
                 followButton = (Button) scene.lookup("#followButton");
                 unfollowButton = (Button) scene.lookup("#unfollowButton");
+                if(test!=null){
                 if (test.contains(visitedUser.getEmail())){
                     followButton.setVisible(false);
                     unfollowButton.setVisible(true);
                 }
+                else{
+                    followButton.setVisible(true);
+                    unfollowButton.setVisible(false);
+                }}
                 else{
                     followButton.setVisible(true);
                     unfollowButton.setVisible(false);
@@ -383,6 +395,8 @@ public class SceneController {
     }
     public void followUser(ActionEvent event) throws IOException {
         ArrayList<String> newFriendList = currentUser.getFriendList();
+        if(newFriendList == null)
+            newFriendList = new ArrayList<>();
         newFriendList.add(visitedUser.getEmail());
         currentUser.setFriendList(newFriendList);
         updateFriendListInDatabase(currentUser);
@@ -390,6 +404,8 @@ public class SceneController {
     }
     public void unfollowUser(ActionEvent event) throws IOException {
         ArrayList<String> newFriendList = currentUser.getFriendList();
+        if(newFriendList == null)
+            newFriendList = new ArrayList<>();
         newFriendList.remove(visitedUser.getEmail());
         currentUser.setFriendList(newFriendList);
         updateFriendListInDatabase(currentUser);
@@ -499,7 +515,7 @@ public class SceneController {
                 throw new DifferentPasswordException();
             if(!isValidEmail(emailField.getText()))
                 throw new InvalidEmailException();
-            User newUser = new User(String.valueOf(nextId), firstnamefield.getText(), lastnamefield.getText(), emailField.getText(), passField.getText(), dob, questionField.getText(), answerField.getText(), null);
+            User newUser = new User(String.valueOf(nextId), firstnamefield.getText(), lastnamefield.getText(), emailField.getText(), passField.getText(), dob, questionField.getText(), answerField.getText(), null, null );
             addUserData(newUser, errorcheckLabel);
             switcher(event,"login_page.fxml", currentUser);
             //System.out.println(newUser.getUserId() + newUser.getDoB() + newUser.getEmail() + newUser.getPassword());
