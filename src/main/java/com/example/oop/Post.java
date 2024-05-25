@@ -18,15 +18,14 @@ public class Post {
         this.caption = caption;
         this.vid = vid;
         image = null;
-        dateCreated = new Date();
         likes = new ArrayList<>();
     }
-    public Post(String owner, String caption, Image img) {
+    public Post(String owner, String caption, Image img, Date date) {
         this.owner = owner;
         this.caption = caption;
         this.image = img;
+        dateCreated = date;
         vid = null;
-        dateCreated = new Date();
         likes = new ArrayList<>();
     }
 

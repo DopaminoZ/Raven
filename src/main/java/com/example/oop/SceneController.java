@@ -33,12 +33,11 @@ import org.bson.types.Binary;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.IllegalFormatException;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.regex.Pattern;
 import static com.example.oop.MongoClientConnection.*;
 
@@ -174,14 +173,18 @@ public class SceneController {
     }
     public void updateNewsfeed(VBox newsfeedvbox) throws IOException {
         ArrayList<Post> postsToView = new ArrayList<>();
-        ArrayList<String> friendListz = currentUser.getFriendList();
+        ArrayList<String> friendListz = new ArrayList<>(currentUser.getFriendList());
         friendListz.add(currentUser.getEmail());
         for (String friendEmail : friendListz) {
             ArrayList<Post> friendPosts = getPostsForUser(friendEmail);
             postsToView.addAll(friendPosts);
         }
+        Collections.sort(postsToView, new Comparator<Post>() {
+            public int compare(Post p1, Post p2) {
+                return p2.getDateCreated().compareTo(p1.getDateCreated());
+            }
+        });
         makeitrain(newsfeedvbox, postsToView);
-        postsToView.clear();
     }
     private ArrayList<Post> getPostsForUser(String userEmail) {
         ArrayList<Document> postsInDB = loadPosts(userEmail);
@@ -194,7 +197,7 @@ public class SceneController {
                 ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
                 image = new Image(bis);
             }
-            posts.add(new Post(userEmail, x.getString("caption"), image));
+            posts.add(new Post(userEmail, x.getString("caption"), image, x.getDate("dateC")));
         }
         return posts;
     }
@@ -383,13 +386,14 @@ public class SceneController {
     }
 
     public void makeitrain(VBox parent, ArrayList<Post> postsToView) throws IOException {
-        parent.getChildren().clear();
         for(int i=0; i<postsToView.size(); i++){
             AnchorPane anchorPane = new AnchorPane();
             anchorPane.setId("anchor"+i);
             postMaker(anchorPane,postsToView.get(i));
             parent.getChildren().add(anchorPane);
         }
+        postsToView.clear();
+
     }
 
 
@@ -429,11 +433,14 @@ public class SceneController {
     }
     public void finalizePost() throws IOException {
         Post createdPost = null;
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Timestamp timestamp = Timestamp.valueOf(localDateTime);
+        Date date = new Date(timestamp.getTime());
         if(selector == 1){
             createdPost = new Post(currentUser.getEmail(), contentCaption.getText(), selectedVid);
         }
         else if(selector == 2){
-            createdPost = new Post(currentUser.getEmail(), contentCaption.getText(), selectedImg);
+            createdPost = new Post(currentUser.getEmail(), contentCaption.getText(), selectedImg, date);
         }
         selectedVid = null;
         selectedImg = null;
