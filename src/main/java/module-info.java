@@ -6,6 +6,7 @@ module com.example.oop {
     requires org.mongodb.bson;
     requires java.sql;
     requires javafx.media;
+    requires javafx.graphics;
 
 
     opens com.example.oop to javafx.fxml;

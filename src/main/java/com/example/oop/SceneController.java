@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.media.VideoTrack;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -125,7 +126,10 @@ public class SceneController {
     private VBox followingVBox;
     @FXML
     private VBox Vboxvisit;
-
+    @FXML
+    private AnchorPane messagespane;
+    @FXML
+    private VBox messagesvbox;
     public MediaPlayer medPlayer;
     public static int selector;
     public static User currentUser;
@@ -193,9 +197,13 @@ public class SceneController {
         myvbox = (VBox) scene.lookup("#myvbox");
         myvbox.setPrefWidth(600); // or any other width you prefer
         myvbox.setPrefHeight(800);
-        makeitrain(myvbox);
-        loadUserProfile(currentUser);
+        makeitrain(currentUser.posts.size(),myvbox);
 
+        loadUserProfile(currentUser);
+        messagesvbox = (VBox)scene.lookup("#messagesvbox");
+        messagesvbox.setPrefWidth(600); // or any other width you prefer
+        messagesvbox.setPrefHeight(800);
+        makeitrainmessages(10,messagesvbox);
     }
     public void switcher(ActionEvent event,String path) throws IOException{
         root = FXMLLoader.load(getClass().getResource(path));
@@ -216,6 +224,13 @@ public class SceneController {
         stage.show();
 
     }
+    /*public void makeitrainMessages(AnchorPane anchorPane){
+        anchorPane = (AnchorPane) scene.lookup("#messagespane");
+        if (messagespane != null) {
+
+        } else {
+            System.out.println("anchorPane is null");
+        }}*/
     public void postMaker(AnchorPane anchorPane){
         anchorPane.setStyle("-fx-background-color: #f0f0f0;"); // Set background color of AnchorPane
 
@@ -234,6 +249,19 @@ public class SceneController {
         imageView.setFitWidth(525);
         imageView.setPreserveRatio(true);
         imageView.setImage(image1);
+
+       /* Media video = new Media(getClass().getResource("testVideo.mp4"));
+        MediaView mediaView = new MediaView();
+        mediaView.setMediaPlayer(new MediaPlayer(video));
+        mediaView.setFitHeight(300);
+        mediaView.setFitWidth(525);
+        mediaView.setPreserveRatio(true);*/
+
+        // Set the position of the ImageView and MediaView to the same values
+        /*imageView.setLayoutX(0);
+        imageView.setLayoutY(0);
+        mediaView.setLayoutX(0);
+        mediaView.setLayoutY(0);*/
 
         HBox hbox = new HBox();
         hbox.setSpacing(10); // Add some spacing between elements in the HBox
@@ -265,11 +293,25 @@ public class SceneController {
         anchorPane.getChildren().add(vbox);
     }
 
-    public void makeitrain(VBox parent){
-        for(int i=0; i<=10; i++){
+    public void makeitrain(int num,VBox parent){
+        for(int i=0; i<=num; i++){
             AnchorPane anchorPane = new AnchorPane();
             anchorPane.setId("anchor"+i);
             postMaker(anchorPane);
+            parent.getChildren().add(anchorPane);
+        }
+    }
+    public void makeitrainmessages(int num,VBox parent){
+        for(int i=0; i<=num; i++){
+            AnchorPane anchorPane = new AnchorPane();
+            anchorPane.setStyle("-fx-background-color: #ffffff;-fx-border-color:#0c0c0c");
+            anchorPane.setId("anchor"+i);
+            VBox vbox = new VBox();
+            vbox.setPadding(new Insets(10));
+            Text message = new Text("database shit");
+            message.setStyle("-fx-font-color: #0c0c0c;"); // Set text color
+            vbox.getChildren().add(message);
+            anchorPane.getChildren().add(vbox);
             parent.getChildren().add(anchorPane);
         }
     }

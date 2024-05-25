@@ -16,7 +16,7 @@ public class User {
     private String questionAnswer;
     private Binary imageData;
     private ArrayList<String> friendList = new ArrayList<>();
-    private ArrayList<Post> posts = new ArrayList<>();
+    public ArrayList<Post> posts = new ArrayList<>();
 
     public User(String userId, String firstName, String lastName, String email, String password, Date doB, String question, String answer, Binary image) {
         this.userId = userId;
