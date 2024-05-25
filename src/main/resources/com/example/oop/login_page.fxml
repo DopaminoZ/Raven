@@ -37,55 +37,76 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
+<VBox id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="365.0" prefWidth="327.0" VBox.vgrow="ALWAYS">
+      <AnchorPane prefHeight="117.0" prefWidth="1538.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-15.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@raven_1_invert.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+    <AnchorPane id="anchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="678.0" prefWidth="1538.0" VBox.vgrow="ALWAYS">
       <children>
-            <TextField fx:id="loginemail" layoutX="361.0" layoutY="118.0" prefHeight="25.0" prefWidth="264.0" />
-            <PasswordField fx:id="loginpass" layoutX="361.0" layoutY="156.0" prefHeight="25.0" prefWidth="264.0" />
-            <Button layoutX="580.0" layoutY="210.0" mnemonicParsing="false" onAction="#login" text="Login">
+            <TextField fx:id="loginemail" layoutX="399.0" layoutY="175.0" prefHeight="25.0" prefWidth="264.0" />
+            <PasswordField fx:id="loginpass" layoutX="399.0" layoutY="255.0" prefHeight="25.0" prefWidth="264.0" />
+            <Button layoutX="575.0" layoutY="371.0" mnemonicParsing="false" onAction="#login" text="Login">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button layoutX="258.0" layoutY="337.0" mnemonicParsing="false" onAction="#switchtoForgetPass" text="Forget password">
+            <Button layoutX="414.0" layoutY="472.0" mnemonicParsing="false" onAction="#switchtoForgetPass" text="Forget password">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button layoutX="507.0" layoutY="290.0" mnemonicParsing="false" onAction="#switchtoReg" prefHeight="25.0" prefWidth="40.0" text="here" textFill="#0011ff" underline="true">
+            <Button layoutX="1162.0" layoutY="604.0" mnemonicParsing="false" onAction="#switchtoReg" prefHeight="66.0" prefWidth="124.0" text="here" textFill="#0011ff" underline="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-        <Label alignment="CENTER" layoutX="258.0" layoutY="117.0" style="&#10;" text="Email " textAlignment="CENTER" wrapText="false">
+        <Label alignment="CENTER" layoutX="195.0" layoutY="187.0" style="&#10;" text="Email " textAlignment="CENTER" wrapText="false">
           <font>
             <Font size="18.0" />
           </font>
         </Label>
-            <Label alignment="CENTER" layoutX="258.0" layoutY="292.0" style="&#10;" text="If you don't have an account yet, click" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="465.0" layoutY="622.0" style="&#10;" text="If you don't have an account yet, click" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="549.0" layoutY="292.0" style="&#10;" text="to register!" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="1325.0" layoutY="613.0" style="&#10;" text="to register!" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="258.0" layoutY="155.0" style="&#10;" text="Password" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="195.0" layoutY="267.0" style="&#10;" text="Password" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="errorchecklog" alignment="CENTER" layoutX="258.0" layoutY="212.0" style="&#10;" textAlignment="CENTER" textFill="RED" wrapText="false">
+            <Label fx:id="errorchecklog" alignment="CENTER" layoutX="317.0" layoutY="244.0" style="&#10;" textAlignment="CENTER" textFill="RED" wrapText="false">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
+            <Label id="welcome" alignment="CENTER" layoutX="1009.0" layoutY="188.0" style="&#10;" text="Welcome To Raven!" textAlignment="CENTER" wrapText="false">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
+      <AnchorPane id="anchor" prefHeight="102.0" prefWidth="1538.0">
+         <children>
+            <Label id="ravenlabel" layoutX="24.0" layoutY="4.0" text="Raven" />
+         </children>
+      </AnchorPane>
   </children>
 </VBox>
