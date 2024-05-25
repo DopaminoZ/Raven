@@ -57,17 +57,6 @@
                   <Image url="@default_profile.jpg" />
                </image>
             </ImageView>
-      <Label alignment="CENTER" layoutY="9.0" nodeOrientation="LEFT_TO_RIGHT" style="&#10;" text="ATTIABOOK" textAlignment="RIGHT" wrapText="false">
-               <font>
-          <Font size="18.0" fx:id="x1" />
-               </font>
-               <textFill>
-          <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
-               </textFill>
-               <padding>
-                  <Insets left="15.0" top="5.0" />
-               </padding>
-            </Label>
             <Button layoutX="1471.0" layoutY="6.0" mnemonicParsing="false" onAction="#switchtoProfile" opacity="0.0" prefHeight="52.0" prefWidth="54.0" text="go to profile">
                <font>
                   <Font size="10.0" />
@@ -76,18 +65,22 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <ImageView fitHeight="115.0" fitWidth="130.0" layoutX="14.0" layoutY="-28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@raven_1_invert.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
     <SplitPane dividerPositions="0.5" focusTraversable="true" maxHeight="-Infinity" prefHeight="648.0" prefWidth="904.0" VBox.vgrow="ALWAYS">
       <items>
             <AnchorPane id="Content" focusTraversable="true" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="1038.0">
                <children>
-                  <ImageView fx:id="testPostImage" fitHeight="300.0" fitWidth="550.0" layoutX="-183.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
-                  <ScrollPane layoutX="-4.0" layoutY="3.0" prefHeight="737.0" prefWidth="1058.0">
+                  <ScrollPane hbarPolicy="NEVER" layoutX="-4.0" layoutY="3.0" prefHeight="737.0" prefWidth="1038.0">
                      <content>
-                        <VBox fx:id="myvbox" prefHeight="733.0" prefWidth="1054.0">
+                        <VBox fx:id="myvbox" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="733.0" prefWidth="1054.0">
                            <children>
-                              <AnchorPane id="anchor" prefHeight="294.0" prefWidth="800.0">
+                              <AnchorPane id="anchor" maxWidth="-Infinity" prefHeight="294.0" prefWidth="1054.0">
                                  <children>
                                     <TextArea layoutX="29.0" layoutY="54.0" prefHeight="139.0" prefWidth="889.0" />
                                     <Button layoutX="703.0" layoutY="161.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
@@ -101,7 +94,13 @@
             </AnchorPane>
         <AnchorPane id="anchor" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="494.0">
           <children>
-            <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Messages" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Messages" textAlignment="CENTER" wrapText="false">
+                     <font>
+                <Font size="18.0" fx:id="x1" />
+                     </font>
+                     <textFill>
+                <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
+                     </textFill></Label>
                   <TextField layoutX="2.0" layoutY="653.0" />
                   <Button layoutX="404.0" layoutY="662.0" mnemonicParsing="false" text="&gt;" />
                   <ScrollPane layoutX="14.0" layoutY="80.0">
@@ -133,7 +132,7 @@
                         <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
                      </textFill>
                   </Label>
-                  <Label layoutX="20.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="patent pending">
+                  <Label layoutX="20.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Raven">
                      <font>
                         <Font size="11.0" fx:id="x3" />
                      </font>
