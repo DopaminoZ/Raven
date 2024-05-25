@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.bson.Document;
@@ -119,6 +120,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
 
     }
@@ -128,6 +130,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
     }
     public void switchtoForgetPass(ActionEvent event) throws IOException{
@@ -136,15 +139,24 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
     }
 
     public void switchtoProfile(ActionEvent event) throws IOException{
         root = FXMLLoader.load(getClass().getResource("profile.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        ImageView profileimageview = (ImageView) root.lookup("#profileimageview");
+        Rectangle clip = new Rectangle(
+                profileimageview.getFitWidth(), profileimageview.getFitHeight()
+        );
+        clip.setArcWidth(500);
+        clip.setArcHeight(500);
+        profileimageview.setClip(clip);
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
         loadUserProfile(currentUser);
     }
@@ -154,6 +166,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
         loadUserProfile(currentUser);
     }
@@ -163,6 +176,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
     }
     public void switcher(ActionEvent event,String path,User userData) throws IOException{
@@ -171,6 +185,7 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
 
     }
