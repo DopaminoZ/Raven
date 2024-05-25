@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -83,35 +84,26 @@ public class SceneController {
     @FXML
     private MediaView testMedia;
     @FXML
-    private Button pause;
+    private ImageView testPostImage;
     @FXML
-    private Button play;
-    public MediaPlayer mediaPlayer;
-
+    private static Media selectedVid;
+    @FXML
+    private static Image selectedImg;
+    @FXML
+    private Button pauseButton;
+    @FXML
+    private Button playButton;
+    public MediaPlayer medPlayer;
+    public static int selector;
     public static User currentUser;
 
     private static final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-    public void loadVideoFromFileChooser() {
-        /*FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Video File");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Video Files", "*.mp4", "*.avi", "*.mkv")
-        );
-        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
-        if (selectedFiles != null && !selectedFiles.isEmpty()) {
-            File selectedFile = selectedFiles.get(0);
-            Media media = new Media(selectedFile.toURI().toString());*/
-            Media media = new Media(getClass().getResource("testVideo.mp4").toString());
-            mediaPlayer = new MediaPlayer(media);
-            testMedia.setMediaPlayer(mediaPlayer);
-            mediaPlayer.play();
 
-    }
     public void pause(){
-        mediaPlayer.pause();
+        medPlayer.pause();
     }
     public void play(){
-        mediaPlayer.play();
+        medPlayer.play();
     }
     public void switchtoReg(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("reg_page.fxml"));
@@ -180,6 +172,61 @@ public class SceneController {
         stage.setFullScreenExitHint("");
         stage.show();
 
+    }
+    public void loadVideoFromFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Video/Image File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Video/Image Files", "*.mp4", "*.avi", "*.mkv", "*.jpg", "*.jpeg", "*.png")
+        );
+        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
+        if (selectedFiles != null && !selectedFiles.isEmpty()) {
+            File selectedFile = selectedFiles.get(0);
+            String fileExtension = getFileExtension(selectedFile);
+            if (isVideoFile(fileExtension)) {
+                selectedVid = new Media(selectedFile.toURI().toString());
+                selector = 1;
+            } else if (isImageFile(fileExtension)) {
+                selectedImg = new Image(selectedFile.toURI().toString());
+                selector = 2;
+            }
+        }
+    }
+    public void finalizePost(){
+        if(selector == 1){
+            medPlayer = new MediaPlayer(selectedVid);
+            testMedia.setMediaPlayer(medPlayer);
+            medPlayer.play();
+            testMedia.setVisible(true);
+            playButton.setVisible(true);
+            pauseButton.setVisible(true);
+            testPostImage.setVisible(false);
+        }
+        else if(selector == 2){
+            testPostImage.setImage(selectedImg);
+            if(medPlayer != null)
+                medPlayer.stop();
+            testPostImage.setVisible(true);
+            playButton.setVisible(false);
+            pauseButton.setVisible(false);
+            testMedia.setVisible(false);
+        }
+    }
+    private String getFileExtension(File file) {
+        String fileName = file.getName();
+        int lastDotIndex = fileName.lastIndexOf('.');
+        if (lastDotIndex > 0) {
+            return fileName.substring(lastDotIndex + 1).toLowerCase();
+        }
+        return "";
+    }
+
+    private boolean isVideoFile(String extension) {
+        return extension.equals("mp4") || extension.equals("avi") || extension.equals("mkv");
+    }
+
+    private boolean isImageFile(String extension) {
+        return extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png");
     }
     public void loadUserProfile(User user){
         try {

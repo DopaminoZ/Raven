@@ -38,6 +38,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -84,18 +85,13 @@
           <content>
             <AnchorPane id="Content" focusTraversable="true" minHeight="-1.0" minWidth="-1.0" prefHeight="546.0" prefWidth="612.0">
                      <children>
-                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="NewsFeed" textAlignment="CENTER" wrapText="false">
-                           <font>
-                              <Font size="18.0" fx:id="x11" />
-                           </font>
-                           <textFill>
-                              <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
-                           </textFill>
-                        </Label>
-                        <MediaView fx:id="testMedia" fitHeight="300.0" fitWidth="550.0" layoutX="14.0" layoutY="89.0" />
-                        <Button layoutX="538.0" layoutY="497.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
-                        <Button fx:id="play" layoutX="14.0" layoutY="415.0" mnemonicParsing="false" onAction="#play" prefHeight="40.0" prefWidth="41.0" text="►" />
-                        <Button fx:id="pause" layoutX="76.0" layoutY="415.0" mnemonicParsing="false" onAction="#pause" prefHeight="40.0" prefWidth="41.0" text="⏸" />
+                        <MediaView fx:id="testMedia" fitHeight="300.0" fitWidth="550.0" layoutX="14.0" layoutY="166.0" />
+                        <Button layoutX="1163.0" layoutY="217.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
+                        <Button fx:id="playButton" layoutX="14.0" layoutY="492.0" mnemonicParsing="false" onAction="#play" prefHeight="40.0" prefWidth="41.0" text="►" visible="false" />
+                        <Button fx:id="pauseButton" layoutX="76.0" layoutY="492.0" mnemonicParsing="false" onAction="#pause" prefHeight="40.0" prefWidth="41.0" text="⏸" visible="false" />
+                        <TextArea layoutX="343.0" layoutY="7.0" prefHeight="139.0" prefWidth="889.0" />
+                        <Button layoutX="1097.0" layoutY="217.0" mnemonicParsing="false" onAction="#finalizePost" text="Post" />
+                        <ImageView fx:id="testPostImage" fitHeight="300.0" fitWidth="550.0" layoutX="35.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
             </AnchorPane>
           </content>
