@@ -193,7 +193,7 @@ public class SceneController {
                 /* Debugging: Print the current document before updating
                 System.out.println("Updating document: " + currentDoc.toJson());*/
                 updateUserData(currentDoc);
-                profileimageview.setImage(loadImage(currentUser));
+                loadUserProfile(currentUser);
             }
         }
     }
