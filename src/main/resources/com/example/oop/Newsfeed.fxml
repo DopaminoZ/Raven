@@ -82,15 +82,17 @@
       <items>
             <AnchorPane id="Content" focusTraversable="true" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="1038.0">
                <children>
-                  <Button layoutX="800.0" layoutY="216.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
-                  <TextArea layoutX="371.0" layoutY="6.0" prefHeight="139.0" prefWidth="889.0" />
-                  <Button layoutX="669.0" layoutY="221.0" mnemonicParsing="false" onAction="#finalizePost" text="Post" />
                   <ImageView fx:id="testPostImage" fitHeight="300.0" fitWidth="550.0" layoutX="-183.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
-                  <ScrollPane layoutX="420.0" layoutY="304.0" prefHeight="400.0" prefWidth="540.0">
+                  <ScrollPane layoutX="-4.0" layoutY="3.0" prefHeight="737.0" prefWidth="1058.0">
                      <content>
-                        <VBox fx:id="myvbox" prefHeight="553.0" prefWidth="519.0">
+                        <VBox fx:id="myvbox" prefHeight="733.0" prefWidth="1054.0">
                            <children>
-                              <AnchorPane id="anchor" prefHeight="200.0" prefWidth="200.0" />
+                              <AnchorPane id="anchor" prefHeight="294.0" prefWidth="800.0">
+                                 <children>
+                                    <TextArea layoutX="29.0" layoutY="54.0" prefHeight="139.0" prefWidth="889.0" />
+                                    <Button layoutX="703.0" layoutY="161.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
+                                    <Button layoutX="696.0" layoutY="46.0" mnemonicParsing="false" onAction="#finalizePost" text="Post" />
+                                 </children></AnchorPane>
                            </children>
                         </VBox>
                      </content>

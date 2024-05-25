@@ -193,8 +193,7 @@ public class SceneController {
 
         stage.show();
         myvbox = (VBox) scene.lookup("#myvbox");
-        myvbox.setPrefWidth(600); // or any other width you prefer
-        myvbox.setPrefHeight(800);
+
         //makeitrain(currentUser.posts.size(),myvbox);
         makeitrain(1,myvbox);
 
@@ -251,7 +250,7 @@ public class SceneController {
         profile.getChildren().addAll(pfp,name);
         TextFlow textFlow = new TextFlow();
         Text text = new Text(post.getCaption());
-        text.setFill(Color.BLACK); // Set text color
+        textFlow.setStyle("-fx-font-color: #f5f5f5;-fx-font-family:'Gill Sans MT';"); // Set text color
         textFlow.getChildren().add(text);
         StackPane content = new StackPane();
         Image image1 = new Image(getClass().getResourceAsStream("raven_1_invert.png"));
