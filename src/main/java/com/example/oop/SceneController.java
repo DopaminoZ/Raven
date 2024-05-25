@@ -123,6 +123,8 @@ public class SceneController {
     private TextField searchBarProfile;
     @FXML
     private VBox followingVBox;
+    @FXML
+    private VBox Vboxvisit;
 
     public MediaPlayer medPlayer;
     public static int selector;
@@ -336,6 +338,31 @@ public class SceneController {
             followingVBox.getChildren().addAll(anchorPane);
         }
     }
+    public void loadVisitNetworkIntoProfile() throws IOException {
+        ArrayList<String> following = visitedUser.getFriendList();
+        for(String friend : following){
+            Document ins = loadUserData(friend);
+            User y = userMaker(ins);
+// Instantiate the AnchorPane
+            AnchorPane anchorPane = new AnchorPane();
+            anchorPane.setPrefHeight(200.0);
+            anchorPane.setPrefWidth(200.0);
+// Instantiate the ImageView
+            ImageView imageView = new ImageView(loadImage(y));
+            imageView.setFitHeight(75.0);
+            imageView.setFitWidth(75.0);
+            imageView.setPickOnBounds(true);
+            imageView.setPreserveRatio(true);
+// Instantiate the Label for the name
+            Label nameLabel = new Label(y.getFirstName()+ " " + y.getLastName());
+            nameLabel.setLayoutX(135.0);
+            nameLabel.setLayoutY(21.0);
+// Add the children to the AnchorPane
+            anchorPane.getChildren().addAll(imageView, nameLabel);
+// Add the Label and AnchorPane to the VBox
+            Vboxvisit.getChildren().addAll(anchorPane);
+        }
+    }
     public void searchForUser(ActionEvent event) throws IllegalArgumentException {
         try{
             Document userData = searchForUserByName(searchBarProfile.getText());
@@ -462,9 +489,11 @@ public class SceneController {
         try {
             visitprofileimageview = (ImageView) scene.lookup("#visitprofileimageview");
             visituserProfileName = (Label) scene.lookup("#visituserProfileName");
+            Vboxvisit = (VBox) scene.lookup("#Vboxvisit");
             if (visitedUser != null) {
                 visitprofileimageview.setImage(loadImage(visitedUser));
                 visituserProfileName.setText(visitedUser.getFirstName() + " " + visitedUser.getLastName());
+                loadVisitNetworkIntoProfile();
 
             }
         }
