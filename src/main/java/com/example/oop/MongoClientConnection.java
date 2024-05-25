@@ -27,6 +27,8 @@ public class MongoClientConnection {
     private static MongoClient client = MongoClients.create(connectionString);
     private static MongoDatabase db = client.getDatabase("accountData");
     static MongoCollection accountcol = db.getCollection("accountCollection");
+    static MongoCollection postcol = db.getCollection("postCollection");
+
 
 
     public static void addUserData(User x, Label error){
@@ -35,6 +37,11 @@ public class MongoClientConnection {
                     append("fullname", x.getFirstName() + " " + x.getLastName()).append("dob", x.getDoB()).append("secques", x.getSecurityQuestion()).append("quesans", encodeSHA256(x.getQuestionAnswer())).append("image", null).append("friendList", null).append("posts", null);
             accountcol.insertOne(newUser);
             error.setText("Account successfully created! You can login in now.");
+    }
+    public static void addPost(Post post){
+        Document newPost = new Document("_id", post.getOwner()).append("vid", post.getVid() ).append("img", post.getImage()).append("likes", null).append("dateC", post.getDateCreated());
+        postcol.insertOne(newPost);
+
     }
     public static void updateUserData(Document user){
         accountcol.replaceOne(Filters.eq("_id", user.getString("_id")), user);

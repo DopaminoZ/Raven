@@ -102,17 +102,9 @@ public class SceneController {
     @FXML
     private Label visituserProfileName;
     @FXML
-    private MediaView testMedia;
-    @FXML
-    private ImageView testPostImage;
-    @FXML
     private static Media selectedVid;
     @FXML
     private static Image selectedImg;
-    @FXML
-    private Button pauseButton;
-    @FXML
-    private Button playButton;
     @FXML
     private VBox myvbox;
     private Button followButton;
@@ -128,7 +120,6 @@ public class SceneController {
     private AnchorPane messagespane;
     @FXML
     private VBox messagesvbox;
-    public MediaPlayer medPlayer;
     public static int selector;
     public static User currentUser;
     public static User visitedUser;
@@ -261,7 +252,6 @@ public class SceneController {
         imageView.setPreserveRatio(true);
         imageView.setImage(image1);
         imageView.setVisible(false);
-
         Media video = post.getVid();
         MediaPlayer playz  = new MediaPlayer(video);
         MediaView mediaView = new MediaView();
@@ -275,11 +265,9 @@ public class SceneController {
         imageView.setLayoutY(0);
         mediaView.setLayoutX(0);
         mediaView.setLayoutY(0);
-
         HBox hbox = new HBox();
         hbox.setSpacing(10); // Add some spacing between elements in the HBox
         hbox.setStyle("-fx-background-color: #000910;"); // Set background color of HBox
-
         ImageView raven1 = new ImageView();
         raven1.setFitHeight(32);
         raven1.setFitWidth(42);
@@ -300,7 +288,6 @@ public class SceneController {
         Label label3 = new Label(String.valueOf(post.getLikes().size()));
         label3.setStyle("-fx-font-size: 20px");
         label3.setTextFill(Color.rgb(50, 50, 50)); // Set text color to a darker gray
-
         hbox.getChildren().addAll(raven1,raven2,raven3,label3);
         vbox.getChildren().addAll(profile,textFlow,content,hbox);
         anchorPane.getChildren().add(vbox);
@@ -367,6 +354,8 @@ public class SceneController {
             pauseButton.setVisible(false);
             testMedia.setVisible(false);
         }
+        selectedVid = null;
+        selectedImg = null;
     }
     public void loadNetworkIntoProfile() throws IOException {
         ArrayList<String> following = currentUser.getFriendList();
