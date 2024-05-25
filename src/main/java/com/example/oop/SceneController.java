@@ -405,7 +405,7 @@ public class SceneController {
             anchorPane.setId("anchor"+i);
             VBox vbox = new VBox();
             vbox.setPadding(new Insets(10));
-            Text message = new Text("database shit");
+            Text message = new Text("database info");
             message.setStyle("-fx-font-color: #0c0c0c;"); // Set text color
             vbox.getChildren().add(message);
             anchorPane.getChildren().add(vbox);

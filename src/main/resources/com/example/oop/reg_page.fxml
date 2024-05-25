@@ -45,8 +45,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
    <children>
       <AnchorPane id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" stylesheets="@styling.css">
          <children>
@@ -118,7 +117,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="568.0" layoutY="797.0" prefHeight="46.0" prefWidth="601.0" style="&#10;" text="If you already have an account, click" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="547.0" layoutY="795.0" prefHeight="58.0" prefWidth="647.0" style="&#10;" text="If you already have an account, click" textAlignment="CENTER" wrapText="false">
                <font>
                   <Font size="15.0" />
                </font>
