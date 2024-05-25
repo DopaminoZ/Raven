@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import static com.example.oop.MongoClientConnection.*;
@@ -80,10 +81,39 @@ public class SceneController {
     private ImageView profileimageview;
     @FXML
     private Label userProfileName;
+    @FXML
+    private MediaView testMedia;
+    @FXML
+    private Button pause;
+    @FXML
+    private Button play;
+    public MediaPlayer mediaPlayer;
+
     public static User currentUser;
 
     private static final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+    public void loadVideoFromFileChooser() {
+        /*FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Video File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Video Files", "*.mp4", "*.avi", "*.mkv")
+        );
+        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
+        if (selectedFiles != null && !selectedFiles.isEmpty()) {
+            File selectedFile = selectedFiles.get(0);
+            Media media = new Media(selectedFile.toURI().toString());*/
+            Media media = new Media(getClass().getResource("testVideo.mp4").toString());
+            mediaPlayer = new MediaPlayer(media);
+            testMedia.setMediaPlayer(mediaPlayer);
+            mediaPlayer.play();
 
+    }
+    public void pause(){
+        mediaPlayer.pause();
+    }
+    public void play(){
+        mediaPlayer.play();
+    }
     public void switchtoReg(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("reg_page.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -255,6 +285,7 @@ public class SceneController {
         }
         catch (Exception e){
             errorchecklog.setText("No account exists with that email.");
+            System.out.println(e.getMessage());
         }
     }
     public void forgetPassword(ActionEvent event) throws IOException{
