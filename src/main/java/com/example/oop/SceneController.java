@@ -2,6 +2,7 @@ package com.example.oop;
 
 import com.mongodb.MongoWriteException;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -17,6 +18,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -24,14 +28,18 @@ import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.types.Binary;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -91,6 +99,10 @@ public class SceneController {
     @FXML
     private Label userProfileName;
     @FXML
+    private ImageView visitprofileimageview;
+    @FXML
+    private Label visituserProfileName;
+    @FXML
     private MediaView testMedia;
     @FXML
     private ImageView testPostImage;
@@ -104,18 +116,26 @@ public class SceneController {
     private Button playButton;
     @FXML
     private VBox myvbox;
+    private Button followButton;
+    @FXML
+    private Button unfollowButton;
+    @FXML
+    private TextField searchBarProfile;
+    @FXML
+    private VBox followingVBox;
+
     public MediaPlayer medPlayer;
     public static int selector;
     public static User currentUser;
-
+    public static User visitedUser;
     private static final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-
     public void pause(){
         medPlayer.pause();
     }
     public void play(){
         medPlayer.play();
     }
+
     public void switchtoReg(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("reg_page.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -146,6 +166,7 @@ public class SceneController {
     }
 
     public void switchtoProfile(ActionEvent event) throws IOException{
+
         root = FXMLLoader.load(getClass().getResource("profile.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -155,7 +176,8 @@ public class SceneController {
         stage.show();
         loadUserProfile(currentUser);
     }
-    public void switchtoNewsfeed(ActionEvent event,User userData) throws IOException {
+
+    public void switchtoNewsfeed(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("newsfeed.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -289,6 +311,102 @@ public class SceneController {
             testMedia.setVisible(false);
         }
     }
+    public void loadNetworkIntoProfile() throws IOException {
+        ArrayList<String> following = currentUser.getFriendList();
+        for(String friend : following){
+            Document ins = loadUserData(friend);
+            User y = userMaker(ins);
+// Instantiate the AnchorPane
+            AnchorPane anchorPane = new AnchorPane();
+            anchorPane.setPrefHeight(200.0);
+            anchorPane.setPrefWidth(200.0);
+// Instantiate the ImageView
+            ImageView imageView = new ImageView(loadImage(y));
+            imageView.setFitHeight(75.0);
+            imageView.setFitWidth(75.0);
+            imageView.setPickOnBounds(true);
+            imageView.setPreserveRatio(true);
+// Instantiate the Label for the name
+            Label nameLabel = new Label(y.getFirstName()+ " " + y.getLastName());
+            nameLabel.setLayoutX(135.0);
+            nameLabel.setLayoutY(21.0);
+// Add the children to the AnchorPane
+            anchorPane.getChildren().addAll(imageView, nameLabel);
+// Add the Label and AnchorPane to the VBox
+            followingVBox.getChildren().addAll(anchorPane);
+        }
+    }
+    public void searchForUser(ActionEvent event) throws IllegalArgumentException {
+        try{
+            Document userData = searchForUserByName(searchBarProfile.getText());
+            Document userData2 = loadUserData(searchBarProfile.getText());
+            if (userData != null) {
+                    visitedUser = userMaker(userData);
+                    ArrayList<String> test  = currentUser.getFriendList();
+                    switcher(event, "visitProfile.fxml");
+                    followButton = (Button) scene.lookup("#followButton");
+                    unfollowButton = (Button) scene.lookup("#unfollowButton");
+                     if (test.contains(visitedUser.getEmail())){
+                     followButton.setVisible(false);
+                     unfollowButton.setVisible(true);
+                     }
+                     else{
+                     followButton.setVisible(true);
+                     unfollowButton.setVisible(false);
+                     }
+                    loadVisitedUserProfile();
+            }
+            else if(userData2 != null){
+                visitedUser = userMaker(userData2);
+                ArrayList<String> test  = currentUser.getFriendList();
+                switcher(event, "visitProfile.fxml");
+                followButton = (Button) scene.lookup("#followButton");
+                unfollowButton = (Button) scene.lookup("#unfollowButton");
+                if (test.contains(visitedUser.getEmail())){
+                    followButton.setVisible(false);
+                    unfollowButton.setVisible(true);
+                }
+                else{
+                    followButton.setVisible(true);
+                    unfollowButton.setVisible(false);
+                }
+                loadVisitedUserProfile();
+            }
+            else{
+                throw new Exception();
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+    public void followUser(ActionEvent event) throws IOException {
+        ArrayList<String> newFriendList = currentUser.getFriendList();
+        newFriendList.add(visitedUser.getEmail());
+        currentUser.setFriendList(newFriendList);
+        updateFriendListInDatabase(currentUser);
+        switchtoProfile(event);
+    }
+    public void unfollowUser(ActionEvent event) throws IOException {
+        ArrayList<String> newFriendList = currentUser.getFriendList();
+        newFriendList.remove(visitedUser.getEmail());
+        currentUser.setFriendList(newFriendList);
+        updateFriendListInDatabase(currentUser);
+        switchtoProfile(event);
+    }
+    private void updateFriendListInDatabase(User user) {
+        Document currentDoc = loadUserData(user.getEmail());
+        if (currentDoc != null) {
+            ArrayList<String> friendEmails = new ArrayList<>();
+            for (String friend : user.getFriendList()) {
+                friendEmails.add(friend);
+            }
+            currentDoc.put("friendList", friendEmails);
+            updateUserData(currentDoc);
+        }
+    }
+
     private String getFileExtension(File file) {
         String fileName = file.getName();
         int lastDotIndex = fileName.lastIndexOf('.');
@@ -309,10 +427,12 @@ public class SceneController {
         try {
             profileimageview = (ImageView) scene.lookup("#profileimageview");
             userProfileName = (Label) scene.lookup("#userProfileName");
+            followingVBox = (VBox) scene.lookup("#followingVBox");
             user = currentUser;
             if (user != null) {
                 profileimageview.setImage(loadImage(user));
                 userProfileName.setText(user.getFirstName() + " " + user.getLastName());
+                loadNetworkIntoProfile();
             }
         }
         catch(NullPointerException e){
@@ -320,6 +440,20 @@ public class SceneController {
         }
         catch(Exception e){
             System.out.println(e.getStackTrace());
+        }
+    }
+    public void loadVisitedUserProfile(){
+        try {
+            visitprofileimageview = (ImageView) scene.lookup("#visitprofileimageview");
+            visituserProfileName = (Label) scene.lookup("#visituserProfileName");
+            if (visitedUser != null) {
+                visitprofileimageview.setImage(loadImage(visitedUser));
+                visituserProfileName.setText(visitedUser.getFirstName() + " " + visitedUser.getLastName());
+
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
         }
     }
     public void uploadImage() throws IOException {
@@ -352,7 +486,7 @@ public class SceneController {
     public User userMaker(Document userData){
         String fullName = userData.getString("fullname");
         String[] tokens = fullName.split(" ");
-        User newUser = new User(userData.getString("userId"),tokens[0],tokens[1],userData.getString("_id"),userData.getString("password"),userData.getDate("dob"),userData.getString("secques"),userData.getString("quesans"), userData.get("image", Binary.class));
+        User newUser = new User(userData.getString("userId"),tokens[0],tokens[1],userData.getString("_id"),userData.getString("password"),userData.getDate("dob"),userData.getString("secques"),userData.getString("quesans"), userData.get("image", Binary.class), userData.get("friendList", ArrayList.class));
         return newUser;
     }
     public void registerAccount(ActionEvent event) throws IOException{
@@ -387,7 +521,7 @@ public class SceneController {
                 if(Objects.equals(userData.getString("password"), encodeSHA256(loginpass.getText()))) {
                     errorchecklog.setText("Login successful!");
                     currentUser = userMaker(userData);
-                    switchtoNewsfeed(event,currentUser);
+                    switchtoNewsfeed(event);
                     loadUserProfile(currentUser);
                 }
                 else

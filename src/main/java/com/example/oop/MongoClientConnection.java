@@ -32,7 +32,7 @@ public class MongoClientConnection {
     public static void addUserData(User x, Label error){
 
             Document newUser = new Document("_id", x.getEmail()).append("userId", x.getUserId()).append("password", encodeSHA256(x.getPassword())).
-                    append("fullname", x.getFirstName() + " " + x.getLastName()).append("dob", x.getDoB()).append("secques", x.getSecurityQuestion()).append("quesans", encodeSHA256(x.getQuestionAnswer())).append("image", null);
+                    append("fullname", x.getFirstName() + " " + x.getLastName()).append("dob", x.getDoB()).append("secques", x.getSecurityQuestion()).append("quesans", encodeSHA256(x.getQuestionAnswer())).append("image", null).append("friendList", null).append("posts", null);
             accountcol.insertOne(newUser);
             error.setText("Account successfully created! You can login in now.");
     }
@@ -46,6 +46,11 @@ public class MongoClientConnection {
                 /*for (String key : userDocument.keySet()) {
                     System.out.println(key + ": " + userDocument.get(key));
                 }*/
+        return userDocument;
+    }
+    public static Document searchForUserByName(String fullname){
+        Document query = new Document("fullname", fullname);
+        Document userDocument = (Document) accountcol.find(query).first();
         return userDocument;
     }
     public static String encodeSHA256(String message) {
