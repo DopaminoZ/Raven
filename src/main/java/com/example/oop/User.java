@@ -28,8 +28,6 @@ public class User {
         securityQuestion = question;
         questionAnswer = answer;
         imageData = image;
-        friendList = new ArrayList<>();
-        posts = new ArrayList<>();
     }
     public User(String userId, String firstName, String lastName, String email, String password, Date doB, String question, String answer, Binary image, ArrayList<String> friends) {
         this.userId = userId;
@@ -42,7 +40,6 @@ public class User {
         questionAnswer = answer;
         imageData = image;
         friendList = friends;
-        posts = new ArrayList<>();
     }
     public User(String email, String password) {
         this.email = email;
