@@ -49,9 +49,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
   <children>
-      <AnchorPane minHeight="-Infinity" prefHeight="64.0" prefWidth="904.0">
+      <AnchorPane id="anchor" minHeight="-Infinity" prefHeight="64.0" prefWidth="904.0">
          <children>
             <ImageView fx:id="profileimageview" fitHeight="64.0" fitWidth="64.0" layoutX="1460.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -79,23 +79,28 @@
             </Button>
          </children>
       </AnchorPane>
-    <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="648.0" prefWidth="904.0" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.5" focusTraversable="true" prefHeight="648.0" prefWidth="904.0" VBox.vgrow="ALWAYS">
       <items>
-        <ScrollPane hbarPolicy="NEVER" prefHeight="490.0" prefWidth="616.0">
-          <content>
             <AnchorPane id="Content" focusTraversable="true" minHeight="-1.0" minWidth="-1.0" prefHeight="546.0" prefWidth="612.0">
-                     <children>
-                        <MediaView fx:id="testMedia" fitHeight="300.0" fitWidth="550.0" layoutX="14.0" layoutY="166.0" />
-                        <Button layoutX="1163.0" layoutY="217.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
-                        <Button fx:id="playButton" layoutX="14.0" layoutY="492.0" mnemonicParsing="false" onAction="#play" prefHeight="40.0" prefWidth="41.0" text="►" visible="false" />
-                        <Button fx:id="pauseButton" layoutX="76.0" layoutY="492.0" mnemonicParsing="false" onAction="#pause" prefHeight="40.0" prefWidth="41.0" text="⏸" visible="false" />
-                        <TextArea layoutX="343.0" layoutY="7.0" prefHeight="139.0" prefWidth="889.0" />
-                        <Button layoutX="1097.0" layoutY="217.0" mnemonicParsing="false" onAction="#finalizePost" text="Post" />
-                        <ImageView fx:id="testPostImage" fitHeight="300.0" fitWidth="550.0" layoutX="35.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
+               <children>
+                  <MediaView fx:id="testMedia" fitHeight="300.0" fitWidth="550.0" layoutX="14.0" layoutY="166.0" />
+                  <Button layoutX="1163.0" layoutY="217.0" mnemonicParsing="false" onAction="#loadVideoFromFileChooser" text="Upload" />
+                  <Button fx:id="playButton" layoutX="14.0" layoutY="492.0" mnemonicParsing="false" onAction="#play" prefHeight="40.0" prefWidth="41.0" text="►" visible="false" />
+                  <Button fx:id="pauseButton" layoutX="76.0" layoutY="492.0" mnemonicParsing="false" onAction="#pause" prefHeight="40.0" prefWidth="41.0" text="⏸" visible="false" />
+                  <TextArea layoutX="343.0" layoutY="7.0" prefHeight="139.0" prefWidth="889.0" />
+                  <Button layoutX="1097.0" layoutY="217.0" mnemonicParsing="false" onAction="#finalizePost" text="Post" />
+                  <ImageView fx:id="testPostImage" fitHeight="300.0" fitWidth="550.0" layoutX="35.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
+                  <ScrollPane layoutX="61.0" layoutY="179.0" prefHeight="546.0" prefWidth="542.0">
+                     <content>
+                        <VBox fx:id="myvbox" prefHeight="553.0" prefWidth="519.0">
+                           <children>
+                              <AnchorPane id="anchor" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
             </AnchorPane>
-          </content>
-        </ScrollPane>
         <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="280.0">
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Messages" textAlignment="CENTER" textFill="$x2" wrapText="false" />

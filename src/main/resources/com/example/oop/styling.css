@@ -5,7 +5,7 @@
     -fx-background-radius: 15, 0; 
     -fx-background-insets: 0, 4;
 }
-#anchor
+#anchor,#Content
 {
     -fx-background-color:#000910;
     -fx-font-family:'Gill Sans MT';

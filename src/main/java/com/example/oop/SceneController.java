@@ -4,6 +4,7 @@ import com.mongodb.MongoWriteException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,9 +14,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.bson.Document;
@@ -32,6 +40,7 @@ import static com.example.oop.MongoClientConnection.*;
 
 
 public class SceneController {
+    int i;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -93,6 +102,8 @@ public class SceneController {
     private Button pauseButton;
     @FXML
     private Button playButton;
+    @FXML
+    private VBox myvbox;
     public MediaPlayer medPlayer;
     public static int selector;
     public static User currentUser;
@@ -144,15 +155,23 @@ public class SceneController {
         stage.show();
         loadUserProfile(currentUser);
     }
-    public void switchtoNewsfeed(ActionEvent event) throws IOException {
+    public void switchtoNewsfeed(ActionEvent event,User userData) throws IOException {
         root = FXMLLoader.load(getClass().getResource("newsfeed.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
         scene = new Scene(root);
+
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
+
         stage.show();
+        myvbox = (VBox) scene.lookup("#myvbox");
+        myvbox.setPrefWidth(600); // or any other width you prefer
+        myvbox.setPrefHeight(800);
+        makeitrain(myvbox);
         loadUserProfile(currentUser);
+
     }
     public void switcher(ActionEvent event,String path) throws IOException{
         root = FXMLLoader.load(getClass().getResource(path));
@@ -173,6 +192,64 @@ public class SceneController {
         stage.show();
 
     }
+    public void postMaker(AnchorPane anchorPane){
+        anchorPane.setStyle("-fx-background-color: #f0f0f0;"); // Set background color of AnchorPane
+
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10)); // Add some padding to the VBox
+
+        TextFlow textFlow = new TextFlow();
+        Text text = new Text("This is a sample text");
+        text.setFill(Color.BLACK); // Set text color
+        textFlow.getChildren().add(text);
+
+
+        Image image1 = new Image(getClass().getResourceAsStream("raven_1_invert.png"));
+        ImageView imageView = new ImageView();
+        imageView.setFitHeight(300);
+        imageView.setFitWidth(525);
+        imageView.setPreserveRatio(true);
+        imageView.setImage(image1);
+
+        HBox hbox = new HBox();
+        hbox.setSpacing(10); // Add some spacing between elements in the HBox
+        hbox.setStyle("-fx-background-color: #eee;"); // Set background color of HBox
+
+        ImageView raven1 = new ImageView();
+        raven1.setFitHeight(32);
+        raven1.setFitWidth(42);
+        raven1.setPreserveRatio(true);
+        raven1.setImage(image1); // Set text color to a darker gray
+
+        ImageView raven2 = new ImageView();
+        raven2.setFitHeight(32);
+        raven2.setFitWidth(42);
+        raven2.setPreserveRatio(true);
+        raven2.setImage(image1);
+
+
+        ImageView raven3 = new ImageView();
+        raven3.setFitHeight(32);
+        raven3.setFitWidth(42);
+        raven3.setPreserveRatio(true);
+        raven3.setImage(image1);
+        Label label3 = new Label("Label 3");
+        label3.setTextFill(Color.rgb(50, 50, 50)); // Set text color to a darker gray
+
+        hbox.getChildren().addAll(label3,raven1,raven2,raven3);
+        vbox.getChildren().addAll(textFlow,imageView,hbox);
+        anchorPane.getChildren().add(vbox);
+    }
+
+    public void makeitrain(VBox parent){
+        for(int i=0; i<=10; i++){
+            AnchorPane anchorPane = new AnchorPane();
+            anchorPane.setId("anchor"+i);
+            postMaker(anchorPane);
+            parent.getChildren().add(anchorPane);
+        }
+    }
+
     public void loadVideoFromFileChooser() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Video/Image File");
@@ -310,7 +387,7 @@ public class SceneController {
                 if(Objects.equals(userData.getString("password"), encodeSHA256(loginpass.getText()))) {
                     errorchecklog.setText("Login successful!");
                     currentUser = userMaker(userData);
-                    switcher(event, "newsfeed.fxml",currentUser);
+                    switchtoNewsfeed(event,currentUser);
                     loadUserProfile(currentUser);
                 }
                 else
