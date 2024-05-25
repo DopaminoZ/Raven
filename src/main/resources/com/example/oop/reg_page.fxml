@@ -46,7 +46,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
    <children>
       <AnchorPane id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" stylesheets="@styling.css">
          <children>
