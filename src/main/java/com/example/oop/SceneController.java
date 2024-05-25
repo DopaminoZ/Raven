@@ -9,10 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -113,6 +110,8 @@ public class SceneController {
     @FXML
     private TextField searchBarProfile;
     @FXML
+    private TextField contentCaption;
+    @FXML
     private VBox followingVBox;
     @FXML
     private VBox Vboxvisit;
@@ -121,6 +120,7 @@ public class SceneController {
     @FXML
     private VBox messagesvbox;
     public static int selector;
+    public static File selectedFile;
     public static User currentUser;
     public static User visitedUser;
     private static final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -171,20 +171,19 @@ public class SceneController {
         stage.show();
         loadUserProfile(currentUser);
     }
-
+    public void updateNewsfeed(){
+        ArrayList<String> friendListz = currentUser.getFriendList();
+    }
     public void switchtoNewsfeed(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("newsfeed.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         scene = new Scene(root);
-
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
-
         stage.show();
         myvbox = (VBox) scene.lookup("#myvbox");
-
+        contentCaption = (TextField) scene.lookup("#contentCaption");
         //makeitrain(currentUser.posts.size(),myvbox);
         makeitrain(1,myvbox);
 
@@ -221,76 +220,142 @@ public class SceneController {
             System.out.println("anchorPane is null");
         }}*/
     public void postMaker(AnchorPane anchorPane, Post post) throws IOException {
-        anchorPane.setStyle("-fx-background-color: #000910;"); // Set background color of AnchorPane
-        VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10)); // Add some padding to the VBox
-        vbox.setSpacing(30);
-        HBox profile = new HBox();
-        profile.setPadding(new Insets(10));
-        profile.setSpacing(30);
-        Document userData = loadUserData(post.getOwner());
-        if(userData == null){
-            System.out.println("no user");
-            return;
+        VBox vboxz = new VBox();
+        vboxz.setPadding(new Insets(10)); // Add some padding to the VBox
+        vboxz.setSpacing(30);
+        if(post.getImage() == null){
+            anchorPane.setStyle("-fx-background-color: #000910;"); // Set background color of AnchorPane
+            HBox profile = new HBox();
+            profile.setPadding(new Insets(10));
+            profile.setSpacing(30);
+            Document userData = loadUserData(post.getOwner());
+            if(userData == null){
+                System.out.println("no user");
+                return;
+            }
+            User owner = userMaker(userData);
+            Image sora = loadImage(owner);
+            ImageView pfp = new ImageView(sora);
+            pfp.setFitHeight(75);
+            pfp.setFitWidth(75);
+            Label name = new Label(owner.getFirstName() + " " + owner.getLastName());
+            profile.getChildren().addAll(pfp,name);
+            TextFlow textFlow = new TextFlow();
+            Text text = new Text(post.getCaption());
+            text.setStyle("-fx-fill: #f5f5f5; -fx-font-family: 'Gill Sans MT'; -fx-font-size: 30px;"); // Set text color and font family
+            textFlow.getChildren().add(text);
+            StackPane content = new StackPane();
+            ImageView imageView = new ImageView();
+            imageView.setFitHeight(300);
+            imageView.setFitWidth(525);
+            imageView.setPreserveRatio(true);
+            imageView.setVisible(false);
+            imageView.setDisable(false);
+            Media video = post.getVid();
+            MediaPlayer playz  = new MediaPlayer(video);
+            MediaView mediaView = new MediaView();
+            mediaView.setMediaPlayer(playz);
+            mediaView.setFitHeight(300);
+            mediaView.setFitWidth(525);
+            mediaView.setPreserveRatio(true);
+            content.getChildren().addAll(imageView,mediaView);
+            // Set the position of the ImageView and MediaView to the same values
+            imageView.setLayoutX(0);
+            imageView.setLayoutY(0);
+            mediaView.setLayoutX(0);
+            mediaView.setLayoutY(0);
+            HBox hbox = new HBox();
+            hbox.setSpacing(10); // Add some spacing between elements in the HBox
+            hbox.setStyle("-fx-background-color: #000910;"); // Set background color of HBox
+            ImageView raven1 = new ImageView();
+            raven1.setFitHeight(32);
+            raven1.setFitWidth(42);
+            raven1.setPreserveRatio(true);
+            raven1.setImage(new Image(getClass().getResourceAsStream("playButton.png"))); // Set text color to a darker gray
+            raven1.setOnMouseClicked(e -> play(e, playz));
+            ImageView raven2 = new ImageView();
+            raven2.setFitHeight(32);
+            raven2.setFitWidth(42);
+            raven2.setPreserveRatio(true);
+            raven2.setImage(new Image(getClass().getResourceAsStream("pauseButton.png")));
+            raven2.setOnMouseClicked(e -> pause(e, playz));
+            ImageView raven3 = new ImageView();
+            raven3.setFitHeight(32);
+            raven3.setFitWidth(42);
+            raven3.setPreserveRatio(true);
+            raven3.setImage(new Image(getClass().getResourceAsStream("likehollow.png")));
+            Label label3 = new Label(String.valueOf(post.getLikes().size()));
+            label3.setStyle("-fx-font-size: 20px");
+            label3.setTextFill(Color.rgb(50, 50, 50)); // Set text color to a darker gray
+            hbox.getChildren().addAll(raven1,raven2,raven3,label3);
+            vboxz.getChildren().addAll(profile,textFlow,content,hbox);
+            anchorPane.getChildren().add(vboxz);
+            }
+        else if(post.getVid() == null){
+            anchorPane.setStyle("-fx-background-color: #000910;"); // Set background color of AnchorPane
+            HBox profile = new HBox();
+            profile.setPadding(new Insets(10));
+            profile.setSpacing(30);
+            Document userData = loadUserData(post.getOwner());
+            if(userData == null){
+                System.out.println("no user");
+                return;
+            }
+            User owner = userMaker(userData);
+            Image sora = loadImage(owner);
+            ImageView pfp = new ImageView(sora);
+            pfp.setFitHeight(75);
+            pfp.setFitWidth(75);
+            Label name = new Label(owner.getFirstName() + " " + owner.getLastName());
+            profile.getChildren().addAll(pfp,name);
+            TextFlow textFlow = new TextFlow();
+            Text text = new Text(post.getCaption());
+            text.setStyle("-fx-fill: #f5f5f5; -fx-font-family: 'Gill Sans MT'; -fx-font-size: 30px;"); // Set text color and font family
+            textFlow.getChildren().add(text);
+            StackPane content = new StackPane();
+            Image image1 = post.getImage();
+            ImageView imageView = new ImageView();
+            imageView.setFitHeight(300);
+            imageView.setFitWidth(525);
+            imageView.setPreserveRatio(true);
+            imageView.setImage(image1);
+            MediaView mediaView = new MediaView();
+            mediaView.setFitHeight(300);
+            mediaView.setFitWidth(525);
+            mediaView.setPreserveRatio(true);
+            mediaView.setVisible(false);
+            mediaView.setDisable(false);
+            content.getChildren().addAll(imageView,mediaView);
+            // Set the position of the ImageView and MediaView to the same values
+            imageView.setLayoutX(0);
+            imageView.setLayoutY(0);
+            mediaView.setLayoutX(0);
+            mediaView.setLayoutY(0);
+            HBox hbox = new HBox();
+            hbox.setSpacing(10); // Add some spacing between elements in the HBox
+            hbox.setStyle("-fx-background-color: #000910;"); // Set background color of HBox
+            ImageView raven1 = new ImageView();
+            raven1.setFitHeight(32);
+            raven1.setFitWidth(42);
+            raven1.setPreserveRatio(true);
+            raven1.setImage(new Image(getClass().getResourceAsStream("playButton.png"))); // Set text color to a darker gray
+            ImageView raven2 = new ImageView();
+            raven2.setFitHeight(32);
+            raven2.setFitWidth(42);
+            raven2.setPreserveRatio(true);
+            raven2.setImage(new Image(getClass().getResourceAsStream("pauseButton.png")));
+            ImageView raven3 = new ImageView();
+            raven3.setFitHeight(32);
+            raven3.setFitWidth(42);
+            raven3.setPreserveRatio(true);
+            raven3.setImage(new Image(getClass().getResourceAsStream("likehollow.png")));
+            Label label3 = new Label(String.valueOf(post.getLikes().size()));
+            label3.setStyle("-fx-font-size: 20px");
+            label3.setTextFill(Color.rgb(50, 50, 50)); // Set text color to a darker gray
+            hbox.getChildren().addAll(raven3,label3);
+            vboxz.getChildren().addAll(profile,textFlow,content,hbox);
+            anchorPane.getChildren().add(vboxz);
         }
-        User owner = userMaker(userData);
-        Image sora = loadImage(owner);
-        ImageView pfp = new ImageView(sora);
-        pfp.setFitHeight(75);
-        pfp.setFitWidth(75);
-        Label name = new Label(owner.getFirstName() + " " + owner.getLastName());
-        profile.getChildren().addAll(pfp,name);
-        TextFlow textFlow = new TextFlow();
-        Text text = new Text(post.getCaption());
-        text.setStyle("-fx-fill: #f5f5f5; -fx-font-family: 'Gill Sans MT'; -fx-font-size: 30px;"); // Set text color and font family
-        textFlow.getChildren().add(text);
-        StackPane content = new StackPane();
-        Image image1 = new Image(getClass().getResourceAsStream("raven_1_invert.png"));
-        ImageView imageView = new ImageView();
-        imageView.setFitHeight(300);
-        imageView.setFitWidth(525);
-        imageView.setPreserveRatio(true);
-        imageView.setImage(image1);
-        imageView.setVisible(false);
-        Media video = post.getVid();
-        MediaPlayer playz  = new MediaPlayer(video);
-        MediaView mediaView = new MediaView();
-        mediaView.setMediaPlayer(playz);
-        mediaView.setFitHeight(300);
-        mediaView.setFitWidth(525);
-        mediaView.setPreserveRatio(true);
-        content.getChildren().addAll(imageView,mediaView);
-        // Set the position of the ImageView and MediaView to the same values
-        imageView.setLayoutX(0);
-        imageView.setLayoutY(0);
-        mediaView.setLayoutX(0);
-        mediaView.setLayoutY(0);
-        HBox hbox = new HBox();
-        hbox.setSpacing(10); // Add some spacing between elements in the HBox
-        hbox.setStyle("-fx-background-color: #000910;"); // Set background color of HBox
-        ImageView raven1 = new ImageView();
-        raven1.setFitHeight(32);
-        raven1.setFitWidth(42);
-        raven1.setPreserveRatio(true);
-        raven1.setImage(new Image(getClass().getResourceAsStream("playButton.png"))); // Set text color to a darker gray
-        raven1.setOnMouseClicked(e -> play(e, playz));
-        ImageView raven2 = new ImageView();
-        raven2.setFitHeight(32);
-        raven2.setFitWidth(42);
-        raven2.setPreserveRatio(true);
-        raven2.setImage(new Image(getClass().getResourceAsStream("pauseButton.png")));
-        raven2.setOnMouseClicked(e -> pause(e, playz));
-        ImageView raven3 = new ImageView();
-        raven3.setFitHeight(32);
-        raven3.setFitWidth(42);
-        raven3.setPreserveRatio(true);
-        raven3.setImage(new Image(getClass().getResourceAsStream("likehollow.png")));
-        Label label3 = new Label(String.valueOf(post.getLikes().size()));
-        label3.setStyle("-fx-font-size: 20px");
-        label3.setTextFill(Color.rgb(50, 50, 50)); // Set text color to a darker gray
-        hbox.getChildren().addAll(raven1,raven2,raven3,label3);
-        vbox.getChildren().addAll(profile,textFlow,content,hbox);
-        anchorPane.getChildren().add(vbox);
     }
 
     public void makeitrain(int num,VBox parent) throws IOException {
@@ -302,6 +367,9 @@ public class SceneController {
             parent.getChildren().add(anchorPane);
         }
     }
+
+
+
     public void makeitrainmessages(int num,VBox parent){
         for(int i=0; i<=num; i++){
             AnchorPane anchorPane = new AnchorPane();
@@ -324,7 +392,7 @@ public class SceneController {
         );
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
         if (selectedFiles != null && !selectedFiles.isEmpty()) {
-            File selectedFile = selectedFiles.get(0);
+            selectedFile = selectedFiles.get(0);
             String fileExtension = getFileExtension(selectedFile);
             if (isVideoFile(fileExtension)) {
                 selectedVid = new Media(selectedFile.toURI().toString());
@@ -335,27 +403,17 @@ public class SceneController {
             }
         }
     }
-    public void finalizePost(){
+    public void finalizePost() throws IOException {
+        Post createdPost = null;
         if(selector == 1){
-            medPlayer = new MediaPlayer(selectedVid);
-            testMedia.setMediaPlayer(medPlayer);
-            medPlayer.play();
-            testMedia.setVisible(true);
-            playButton.setVisible(true);
-            pauseButton.setVisible(true);
-            testPostImage.setVisible(false);
+            createdPost = new Post(currentUser.getEmail(), contentCaption.getText(), selectedVid);
         }
         else if(selector == 2){
-            testPostImage.setImage(selectedImg);
-            if(medPlayer != null)
-                medPlayer.stop();
-            testPostImage.setVisible(true);
-            playButton.setVisible(false);
-            pauseButton.setVisible(false);
-            testMedia.setVisible(false);
+            createdPost = new Post(currentUser.getEmail(), contentCaption.getText(), selectedImg);
         }
         selectedVid = null;
         selectedImg = null;
+        addPost(createdPost, selectedFile);
     }
     public void loadNetworkIntoProfile() throws IOException {
         ArrayList<String> following = currentUser.getFriendList();

@@ -32,7 +32,7 @@
     -fx-pref-height : 70px;
     
 }
-.text-area{
+#contentCap{
     -fx-font-family:'Gill Sans MT';
     -fx-font-size:30px;
     -fx-control-inner-background: #222222;
@@ -48,7 +48,7 @@
     -fx-pref-width: 600px;
     -fx-pref-height : 200px;
 }
-.text-area:focused {
+#contentCap:focused {
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }

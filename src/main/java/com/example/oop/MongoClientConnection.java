@@ -9,6 +9,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 import org.bson.Document;
 import org.bson.types.Binary;
 
@@ -32,16 +33,15 @@ public class MongoClientConnection {
 
 
     public static void addUserData(User x, Label error){
-
             Document newUser = new Document("_id", x.getEmail()).append("userId", x.getUserId()).append("password", encodeSHA256(x.getPassword())).
                     append("fullname", x.getFirstName() + " " + x.getLastName()).append("dob", x.getDoB()).append("secques", x.getSecurityQuestion()).append("quesans", encodeSHA256(x.getQuestionAnswer())).append("image", null).append("friendList", null).append("posts", null);
             accountcol.insertOne(newUser);
             error.setText("Account successfully created! You can login in now.");
     }
-    public static void addPost(Post post){
-        Document newPost = new Document("_id", post.getOwner()).append("vid", post.getVid() ).append("img", post.getImage()).append("likes", null).append("dateC", post.getDateCreated());
+    public static void addPost(Post post, File file) throws IOException {
+        Binary image = storeImage(file);
+        Document newPost = new Document("_id", postcol.countDocuments()+1).append("owner", post.getOwner()).append("caption",post.getCaption()).append("vid", null).append("img", image).append("likes", null).append("dateC", post.getDateCreated());
         postcol.insertOne(newPost);
-
     }
     public static void updateUserData(Document user){
         accountcol.replaceOne(Filters.eq("_id", user.getString("_id")), user);
@@ -75,6 +75,13 @@ public class MongoClientConnection {
         File imageFile = new File(Path);
         FileInputStream fis = new FileInputStream(imageFile);
         byte[] imageBytes = new byte[(int) imageFile.length()];
+        fis.read(imageBytes);
+        fis.close();
+        return new Binary(imageBytes);
+    }
+    public static Binary storeImage(File selectedFile) throws IOException {
+        FileInputStream fis = new FileInputStream(selectedFile);
+        byte[] imageBytes = new byte[(int) selectedFile.length()];
         fis.read(imageBytes);
         fis.close();
         return new Binary(imageBytes);
