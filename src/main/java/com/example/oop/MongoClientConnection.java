@@ -2,10 +2,7 @@ package com.example.oop;
 
 
 import com.mongodb.MongoWriteException;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,6 +14,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.regex.Pattern;
 
@@ -54,6 +52,20 @@ public class MongoClientConnection {
                     System.out.println(key + ": " + userDocument.get(key));
                 }*/
         return userDocument;
+    }
+    public static ArrayList<Document> loadPosts(String email) {
+        Document query = new Document("owner", email);
+        MongoCursor<Document> cursor = postcol.find(query).iterator();
+        ArrayList<Document> userDocuments = new ArrayList<>();
+        try {
+            while (cursor.hasNext()) {
+                Document userDocument = cursor.next();
+                userDocuments.add(userDocument);
+            }
+        } finally {
+            cursor.close();
+        }
+        return userDocuments;
     }
     public static Document searchForUserByName(String fullname){
         Document query = new Document("fullname", fullname);

@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.types.Binary;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -171,8 +172,31 @@ public class SceneController {
         stage.show();
         loadUserProfile(currentUser);
     }
-    public void updateNewsfeed(){
+    public void updateNewsfeed(VBox newsfeedvbox) throws IOException {
+        ArrayList<Post> postsToView = new ArrayList<>();
         ArrayList<String> friendListz = currentUser.getFriendList();
+        friendListz.add(currentUser.getEmail());
+        for (String friendEmail : friendListz) {
+            ArrayList<Post> friendPosts = getPostsForUser(friendEmail);
+            postsToView.addAll(friendPosts);
+        }
+        makeitrain(newsfeedvbox, postsToView);
+        postsToView.clear();
+    }
+    private ArrayList<Post> getPostsForUser(String userEmail) {
+        ArrayList<Document> postsInDB = loadPosts(userEmail);
+        ArrayList<Post> posts = new ArrayList<>();
+        for(Document x : postsInDB){
+            Image image = null;
+            if (x.get("img") != null) {
+                Binary binary = (Binary) x.get("img");
+                byte[] imageData = binary.getData();
+                ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
+                image = new Image(bis);
+            }
+            posts.add(new Post(userEmail, x.getString("caption"), image));
+        }
+        return posts;
     }
     public void switchtoNewsfeed(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("newsfeed.fxml"));
@@ -185,8 +209,8 @@ public class SceneController {
         myvbox = (VBox) scene.lookup("#myvbox");
         contentCaption = (TextField) scene.lookup("#contentCaption");
         //makeitrain(currentUser.posts.size(),myvbox);
-        makeitrain(1,myvbox);
-
+        //makeitrain(1,myvbox);
+        updateNewsfeed(myvbox);
         loadUserProfile(currentUser);
         messagesvbox = (VBox)scene.lookup("#messagesvbox");
         messagesvbox.setPrefWidth(600); // or any other width you prefer
@@ -358,12 +382,12 @@ public class SceneController {
         }
     }
 
-    public void makeitrain(int num,VBox parent) throws IOException {
-        for(int i=0; i<num; i++){
+    public void makeitrain(VBox parent, ArrayList<Post> postsToView) throws IOException {
+        parent.getChildren().clear();
+        for(int i=0; i<postsToView.size(); i++){
             AnchorPane anchorPane = new AnchorPane();
             anchorPane.setId("anchor"+i);
-            Media x = new Media(getClass().getResource("testVideo.mp4").toString());
-            postMaker(anchorPane, new Post("a@gmail.com", "yayayoyo", x));
+            postMaker(anchorPane,postsToView.get(i));
             parent.getChildren().add(anchorPane);
         }
     }
