@@ -119,6 +119,8 @@ public class SceneController {
     private AnchorPane messagespane;
     @FXML
     private VBox messagesvbox;
+    @FXML
+    private VBox profilevboxnews;
     public static int selector;
     public static File selectedFile;
     public static User currentUser;
@@ -170,6 +172,8 @@ public class SceneController {
         stage.setFullScreenExitHint("");
         stage.show();
         loadUserProfile(currentUser);
+        profilevboxnews = (VBox) scene.lookup("#profilevboxnews");
+        updateNewsfeedProfile(profilevboxnews);
     }
     public void updateNewsfeed(VBox newsfeedvbox) throws IOException {
         ArrayList<Post> postsToView = new ArrayList<>();
@@ -179,12 +183,24 @@ public class SceneController {
             ArrayList<Post> friendPosts = getPostsForUser(friendEmail);
             postsToView.addAll(friendPosts);
         }
+
         Collections.sort(postsToView, new Comparator<Post>() {
             public int compare(Post p1, Post p2) {
                 return p2.getDateCreated().compareTo(p1.getDateCreated());
             }
         });
         makeitrain(newsfeedvbox, postsToView);
+    }
+    public void updateNewsfeedProfile(VBox newsfeedvbox) throws IOException {
+        ArrayList<Post> postsToView = new ArrayList<>();
+        ArrayList<String> friendListz = new ArrayList<>();
+        friendListz.add(currentUser.getEmail());
+        for (String friendEmail : friendListz) {
+            ArrayList<Post> friendPosts = getPostsForUser(friendEmail);
+            postsToView.addAll(friendPosts);
+        }
+        makeitrain(newsfeedvbox, postsToView);
+        postsToView.clear();
     }
     private ArrayList<Post> getPostsForUser(String userEmail) {
         ArrayList<Document> postsInDB = loadPosts(userEmail);
