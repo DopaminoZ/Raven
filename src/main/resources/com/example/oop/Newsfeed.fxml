@@ -47,7 +47,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
+<VBox id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="1540.0" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop.SceneController">
   <children>
       <AnchorPane id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="64.0" prefWidth="904.0">
          <children>
@@ -74,6 +74,12 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <ImageView fitHeight="62.0" fitWidth="67.0" layoutX="1116.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@refresh.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="1112.0" layoutY="-4.0" mnemonicParsing="false" onAction="#switchtoNewsfeed" opacity="0.0" prefHeight="46.0" prefWidth="47.0" text="Button" />
          </children>
       </AnchorPane>
     <SplitPane dividerPositions="0.5" focusTraversable="true" maxHeight="-Infinity" prefHeight="648.0" prefWidth="904.0" VBox.vgrow="ALWAYS">
@@ -94,7 +100,7 @@
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor></Button>
-                                    <TextField id="contentCap" fx:id="contentCaption" layoutX="29.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="199.0" prefWidth="600.0">
+                                    <TextField id="contentCap" fx:id="contentCaption" layoutX="28.0" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="199.0" prefWidth="600.0">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor></TextField>

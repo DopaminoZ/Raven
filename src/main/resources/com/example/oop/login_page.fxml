@@ -58,11 +58,11 @@
       <children>
             <TextField fx:id="loginemail" layoutX="399.0" layoutY="175.0" prefHeight="25.0" prefWidth="264.0" />
             <PasswordField fx:id="loginpass" layoutX="399.0" layoutY="255.0" prefHeight="25.0" prefWidth="264.0" />
-            <Button layoutX="575.0" layoutY="371.0" mnemonicParsing="false" onAction="#login" text="Login">
+            <Button layoutX="258.0" layoutY="363.0" mnemonicParsing="false" onAction="#login" text="Login">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button layoutX="414.0" layoutY="472.0" mnemonicParsing="false" onAction="#switchtoForgetPass" text="Forget password">
+            <Button layoutX="407.0" layoutY="363.0" mnemonicParsing="false" onAction="#switchtoForgetPass" text="Forget password">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
@@ -91,7 +91,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label id="exp" fx:id="errorchecklog" alignment="CENTER" layoutX="195.0" layoutY="380.0" prefHeight="58.0" prefWidth="376.0" style="&#10;" textAlignment="CENTER" textFill="RED" wrapText="false">
+            <Label id="exp" fx:id="errorchecklog" alignment="CENTER" layoutX="179.0" layoutY="482.0" prefHeight="58.0" prefWidth="523.0" style="&#10;" textAlignment="CENTER" textFill="RED" wrapText="true">
                <font>
                   <Font size="15.0" />
                </font>

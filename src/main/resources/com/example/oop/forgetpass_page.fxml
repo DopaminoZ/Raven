@@ -80,10 +80,10 @@
             <Label layoutX="62.0" layoutY="173.0" text="Email: " />
             <Label layoutX="62.0" layoutY="250.0" text="Your security question:" />
             <Label layoutX="70.0" layoutY="343.0" text="Answer:" />
-            <Label fx:id="securityQuestionLabel" layoutX="455.0" layoutY="257.0" prefHeight="17.0" prefWidth="192.0" />
+            <Label fx:id="securityQuestionLabel" layoutX="455.0" layoutY="257.0" prefHeight="46.0" prefWidth="374.0" />
             <Label fx:id="newpassLabel" disable="true" layoutX="62.0" layoutY="423.0" text="New password:" />
             <Label fx:id="newconfirmLabel" disable="true" layoutX="62.0" layoutY="501.0" text="Confirm password:" />
-            <Label id="exp" fx:id="forgetLabel" layoutX="793.0" layoutY="517.0" prefHeight="46.0" prefWidth="745.0" textFill="RED" />
+            <Label id="exp" fx:id="forgetLabel" layoutX="793.0" layoutY="517.0" prefHeight="46.0" prefWidth="745.0" textFill="RED" wrapText="true" />
          </children>
     </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">

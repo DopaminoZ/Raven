@@ -413,13 +413,11 @@ public class SceneController {
                 vboxz.getChildren().addAll(profile,textFlow,content,hbox);
                 hbox.getChildren().addAll(raven4,label3);
                 anchorPane.getChildren().add(vboxz);
-                System.out.println(post.getLikes().size());
             }
             else{
                 hbox.getChildren().addAll(raven3,label3);
                 vboxz.getChildren().addAll(profile,textFlow,content,hbox);
                 anchorPane.getChildren().add(vboxz);
-                System.out.println(post.getLikes().size());
             }
         }
     }
