@@ -35,8 +35,21 @@ public class MongoClientConnection {
     }
     public static void addPost(Post post, File file) throws IOException {
         Binary image = storeImage(file);
-        Document newPost = new Document("_id", postcol.countDocuments()+1).append("owner", post.getOwner()).append("caption",post.getCaption()).append("vid", null).append("img", image).append("likes", null).append("dateC", post.getDateCreated());
+        Document newPost = new Document("_id", post.getPostID()).append("owner", post.getOwner()).append("caption",post.getCaption()).append("vid", null).append("img", image).append("likes", null).append("dateC", post.getDateCreated());
         postcol.insertOne(newPost);
+    }
+    public static Document loadPost(String id){
+        Document query = new Document("_id", id);
+        Document userDocument = (Document) postcol.find(query).first();
+        //Console text to check found data on db
+                /*for (String key : userDocument.keySet()) {
+                    System.out.println(key + ": " + userDocument.get(key));
+                }*/
+        return userDocument;
+    }
+    public static void updatePost(Document post){
+        postcol.replaceOne(Filters.eq("_id", post.getString("_id")), post);
+        System.out.println("found post");
     }
     public static void updateUserData(Document user){
         accountcol.replaceOne(Filters.eq("_id", user.getString("_id")), user);

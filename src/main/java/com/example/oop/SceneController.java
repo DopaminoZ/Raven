@@ -2,7 +2,6 @@ package com.example.oop;
 
 import com.mongodb.MongoWriteException;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -14,17 +13,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.media.VideoTrack;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.bson.Document;
@@ -38,7 +33,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
 import static com.example.oop.MongoClientConnection.*;
@@ -219,8 +213,12 @@ public class SceneController {
                 byte[] imageData = binary.getData();
                 ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
                 image = new Image(bis);
+            }if(x.get("likes") != null) {
+                ArrayList<String> likes = (ArrayList<String>) x.get("likes");
+                posts.add(new Post(x.getString("_id"), userEmail, x.getString("caption"), image, x.getDate("dateC"), likes));
+            }else{
+                posts.add(new Post(x.getString("_id"), userEmail, x.getString("caption"), image, x.getDate("dateC")));
             }
-            posts.add(new Post(userEmail, x.getString("caption"), image, x.getDate("dateC")));
         }
         return posts;
     }
@@ -389,12 +387,42 @@ public class SceneController {
             raven3.setFitWidth(42);
             raven3.setPreserveRatio(true);
             raven3.setImage(new Image(getClass().getResourceAsStream("likehollow.png")));
+            raven3.setOnMouseClicked(e -> {
+                try {
+                    likePost(post);
+                    System.out.println("liked!");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+            ImageView raven4 = new ImageView();
+            raven4.setFitHeight(32);
+            raven4.setFitWidth(42);
+            raven4.setPreserveRatio(true);
+            raven4.setImage(new Image(getClass().getResourceAsStream("likesolid.png")));
+            raven4.setOnMouseClicked(e -> {
+                try {
+                    unlikePost(post);
+                    System.out.println("unliked!");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
             Label label3 = new Label(String.valueOf(post.getLikes().size()));
             label3.setStyle("-fx-font-size: 20px");
             label3.setTextFill(Color.rgb(50, 50, 50)); // Set text color to a darker gray
-            hbox.getChildren().addAll(raven3,label3);
-            vboxz.getChildren().addAll(profile,textFlow,content,hbox);
-            anchorPane.getChildren().add(vboxz);
+            if(post.getLikes().contains(currentUser.getEmail())){
+                vboxz.getChildren().addAll(profile,textFlow,content,hbox);
+                hbox.getChildren().addAll(raven4,label3);
+                anchorPane.getChildren().add(vboxz);
+                System.out.println(post.getLikes().size());
+            }
+            else{
+                hbox.getChildren().addAll(raven3,label3);
+                vboxz.getChildren().addAll(profile,textFlow,content,hbox);
+                anchorPane.getChildren().add(vboxz);
+                System.out.println(post.getLikes().size());
+            }
         }
     }
     public void makeitrain(VBox parent, ArrayList<Post> postsToView) throws IOException {
@@ -445,11 +473,12 @@ public class SceneController {
         LocalDateTime localDateTime = LocalDateTime.now();
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
         Date date = new Date(timestamp.getTime());
-        if(selector == 1){
-            createdPost = new Post(currentUser.getEmail(), contentCaption.getText(), selectedVid);
-        }
-        else if(selector == 2){
-            createdPost = new Post(currentUser.getEmail(), contentCaption.getText(), selectedImg, date);
+        if (selector == 1) {
+            long count = postcol.countDocuments();
+            createdPost = new Post(String.valueOf(count + 1), currentUser.getEmail(), contentCaption.getText(), selectedVid);
+        } else if (selector == 2) {
+            long count = postcol.countDocuments();
+            createdPost = new Post(String.valueOf(count + 1), currentUser.getEmail(), contentCaption.getText(), selectedImg, date);
         }
         selectedVid = null;
         selectedImg = null;
@@ -510,7 +539,6 @@ public class SceneController {
             Document userData = searchForUserByName(searchBarProfile.getText());
             Document userData2 = loadUserData(searchBarProfile.getText());
             if (userData != null) {
-
                     visitedUser = userMaker(userData);
                     ArrayList<String> test = currentUser.getFriendList();
                     switcher(event, "visitProfile.fxml");
@@ -563,6 +591,22 @@ public class SceneController {
         }
 
     }
+    public void likePost(Post post) throws IOException {
+        ArrayList<String> likers = post.getLikes();
+        if(likers == null)
+            likers = new ArrayList<>();
+        likers.add(currentUser.getEmail());
+        post.setLikes(likers);
+        updateLikes(post);
+    }
+    public void unlikePost(Post post) throws IOException {
+        ArrayList<String> likers = post.getLikes();
+        if(likers == null)
+            likers = new ArrayList<>();
+        likers.remove(currentUser.getEmail());
+        post.setLikes(likers);
+        updateLikes(post);
+    }
     public void followUser(ActionEvent event) throws IOException {
         ArrayList<String> newFriendList = currentUser.getFriendList();
         if(newFriendList == null)
@@ -592,7 +636,17 @@ public class SceneController {
             updateUserData(currentDoc);
         }
     }
-
+    private void updateLikes(Post post) {
+        Document currentDoc = loadPost(post.getPostID());
+        if (currentDoc != null) {
+            ArrayList<String> likers = new ArrayList<>();
+            for (String liker : post.getLikes()) {
+                likers.add(liker);
+            }
+            currentDoc.put("likes", likers);
+            updatePost(currentDoc);
+        }
+    }
     private String getFileExtension(File file) {
         String fileName = file.getName();
         int lastDotIndex = fileName.lastIndexOf('.');
