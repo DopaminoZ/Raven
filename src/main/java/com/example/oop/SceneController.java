@@ -390,7 +390,6 @@ public class SceneController {
             raven3.setOnMouseClicked(e -> {
                 try {
                     likePost(post);
-                    System.out.println("liked!");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -403,7 +402,6 @@ public class SceneController {
             raven4.setOnMouseClicked(e -> {
                 try {
                     unlikePost(post);
-                    System.out.println("unliked!");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }

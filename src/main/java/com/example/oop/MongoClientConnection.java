@@ -49,7 +49,6 @@ public class MongoClientConnection {
     }
     public static void updatePost(Document post){
         postcol.replaceOne(Filters.eq("_id", post.getString("_id")), post);
-        System.out.println("found post");
     }
     public static void updateUserData(Document user){
         accountcol.replaceOne(Filters.eq("_id", user.getString("_id")), user);
